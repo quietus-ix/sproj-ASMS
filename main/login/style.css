@@ -1,0 +1,101 @@
+@import url('../../src/assets/fonts/font.css');
+
+* {
+     padding: 0;
+     margin: 0;
+     font-family: 'Poppins', sans-serif;
+}
+
+@keyframes loginFX {
+     100% {
+          transform: translateX(100%);
+     }
+}
+.loginFX {
+     animation: loginFX 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0.3s 1 normal forwards;
+}
+@keyframes loginTransitionFX {
+     100% {
+          transform: translateX(0);
+     }
+}
+.loginTransitionFX {
+     animation: loginTransitionFX 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0.4s 1 normal forwards;
+}
+.loginBGFX {
+     animation: loginTransitionFX 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0.3s 1 normal forwards;
+}
+.loginToRegisterTransitionFX {
+     animation: loginTransitionFX 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0s 1 normal forwards;
+}
+@keyframes loginToRegisterContainerFX {
+     100% {
+          transform: translateX(-50px);
+     }
+}
+.loginToRegisterContainerFX {
+     animation: loginToRegisterContainerFX 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0s 1 normal forwards;
+}
+@keyframes regFX {
+     100% {
+          transform: translateX(-100%);
+     }
+}
+.regFX {
+     animation: regFX 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0.5s 1 normal forwards;
+}
+@keyframes regBGFX {
+     0% {
+          transform: translateX(20px);
+     }
+     100% {
+          transform: translateX(0);
+     }
+}
+.regBGFX {
+     animation: regBGFX 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0.3s 1 normal forwards;
+}
+@keyframes regToLoginContainerFX {
+     100% {
+          transform: translateX(50px);
+     }
+}
+.regToLoginContainerFX {
+     animation: regToLoginContainerFX 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0s 1 normal forwards;
+}
+
+body {
+     height: 100vh;
+     width: 100vw;
+}
+.body-transition-cover {
+     background-color: #28282B;
+     transform: translateX(0);
+}
+.body-bg {
+     transform: translateX(-10px);
+}
+
+.prompt-container-log,
+.prompt-container-reg {
+     background: #F8F8FF;
+     width: max-content;
+     height: max-content;
+}
+.prompt-container-log {
+     transform: translateX(-30px);
+}
+.prompt-container-reg {
+     transform: translateX(30px);
+}
+.prompt-container-log .logo-header,
+.prompt-container-reg .logo-header {
+     color: #28282B;
+}
+
+.body-cover {
+     background: #28282B;
+     opacity: 0.6;
+}
+
+/* login */
