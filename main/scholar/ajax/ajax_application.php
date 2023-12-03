@@ -43,6 +43,10 @@
           ));
      }
      else {
+          session_start();
+
+          $reqBy = $_SESSION['sessionID'];
+
           $query = $conn->prepare(
                "INSERT INTO `tbl_scholar_family`( 
                     `sfam_f_name`, 
@@ -90,18 +94,19 @@
                               `scholar_gender`, 
                               `scholar_email`, 
                               `scholar_num`,
-                              `scholar_status`
+                              `scholar_status`,
+                              `scholar_reqBy`
                          ) 
-                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
                     );
                     $query->bind_param(
-                         'ssssssssssssssss', 
+                         'sssssssssssssssss', 
                          $course, $famID,
                          $lastName, $firstName, $middleName, $extension,
                          $baranggay, $municipality,
                          $civilStatus, $citizenship, $dateOfBirth, $age, $gender,
                          $email, $contactNum,
-                         $status
+                         $status, $reqBy
                     );
                     $query->execute();
 

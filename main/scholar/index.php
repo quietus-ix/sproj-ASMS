@@ -1,5 +1,11 @@
 <?php
 	require_once '../php/config.php';
+	session_start();
+
+	$sessionID = $_SESSION['sessionID'];
+	
+	$query = $conn->query("SELECT user_fullname FROM tbl_user WHERE user_id = '$sessionID'");
+	$user = $query->fetch_column();
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +80,7 @@
 						<div class="dropdown">
 							<button class="btn d-flex align-items-center gap-2 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 							<img src="../../src/assets/img/test-profile.png" class="rounded" alt="" style="width: 2.5rem; height: 2.5rem;">
-							Mary Angel
+							<?php echo $user; ?>
 							</button>
 							<ul class="dropdown-menu">
 								<li>
@@ -84,7 +90,7 @@
 									</a>
 								</li>
 								<li>
-									<a class="dropdown-item d-flex align-items-center py-2" href="#">
+									<a class="dropdown-item d-flex align-items-center py-2" href="../php/logout.php">
 									<i class='bx bxs-log-out fs-3 me-3' ></i>
 									Log out
 									</a>

@@ -1,7 +1,4 @@
-@font-face {
-     font-family: Poppins;
-     src: url(../../src/assets/fonts/poppins.ttf);
-}
+@import url('../../src/assets/fonts/font.css');
 
 /* anim */
 @keyframes slideRight {
