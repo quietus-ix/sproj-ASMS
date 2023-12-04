@@ -4,6 +4,10 @@
 
 	$sessionID = $_SESSION['sessionID'];
 	
+	if(!isset($sessionID)) {
+		header('Location: ../login/index.php');
+	}
+	
 	$query = $conn->query("SELECT user_fullname FROM tbl_user WHERE user_id = '$sessionID'");
 	$user = $query->fetch_column();
 ?>
@@ -33,16 +37,16 @@
 				</div>
 
 				<div class="nav-links d-flex flex-column pe-0 position-relative z-1">
-					<div class="">
+					<div class="" id="dashboard_tab">
 						<a href="#" class="active">
 							<i class='bx bx-grid-alt' ></i>
 							<span class="links_name">Dashboard</span>
 						</a>
 					</div>
-					<div class="">
+					<div class="" id="applicationView_tab">
 						<a href="#">
 							<i class='bx bx-user'></i>
-							<span class="links_name">Your Info</span>
+							<span class="links_name">Your Application</span>
 						</a>
 					</div>
 					<div class="">
@@ -66,8 +70,8 @@
 				</div>
 			</div>
 
-			<!-- the nav bar above -->
 			<div class="content d-flex flex-column px-0 mx-0">
+				<!-- the nav bar above -->
 				<div class="nav-top shadow-sm d-flex align-items-center px-3 py-2">
 					<div class="col-10 align-items-center d-flex">
 						<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-clipboard-data-fill me-2 nav-heading-icon" viewBox="0 0 16 16">

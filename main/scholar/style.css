@@ -111,3 +111,24 @@ body {
 .app-art img {
      width: 12rem;
 }
+
+/* application view styles */
+.application-banner {
+     background: #fff;
+}
+.pending {
+     color: #5ea4ff;
+}
+.approved {
+     color: #00ff22;
+}
+.rejected {
+     color: #ff5e5e;
+}
+.modified {
+     color: #ffd000;
+}
+
+.application-banner-illustration img {
+     width: 8rem;
+}

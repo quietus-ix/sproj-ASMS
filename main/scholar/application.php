@@ -25,55 +25,65 @@
                          <div class="row">
                               <!-- last name -->
                               <div class="col">
-                                   <label for="apply_ln" class="form-label">Last</label>
-                                   <input type="text" class="form-control" name="apply_ln" placeholder="Malba" required>
+                                   <div class="form-floating">
+                                        <input type="text" class="form-control" name="apply_ln" placeholder="Malba" required>
+                                        <label for="apply_ln">Last</label>
+                                   </div>
                               </div>
                               <!-- first name -->
                               <div class="col">
-                                   <label for="apply_fn" class="form-label">First</label>
-                                   <input type="text" class="form-control" name="apply_fn" placeholder="Mary Angel" required>
+                                   <div class="form-floating">
+                                        <input type="text" class="form-control" name="apply_fn" placeholder="Mary Angel" required>
+                                        <label for="apply_fn">First</label>
+                                   </div>
                               </div>
                               <!-- middle name -->
                               <div class="col">
-                                   <label for="apply_mn" class="form-label">Middle</label>
-                                   <input type="text" class="form-control" name="apply_mn" placeholder="Maque" required>
+                                   <div class="form-floating">
+                                        <input type="text" class="form-control" name="apply_mn" placeholder="Maque" required>
+                                        <label for="apply_mn">Middle</label>
+                                   </div>
                               </div>
                               <!-- name extension -->
                               <div class="col-1">
-                                   <label for="apply_ext" class="form-label">Ext.</label>
-                                   <input type="text" class="form-control" name="apply_ext" placeholder="Jr">
+                                   <div class="form-floating">
+                                        <input type="text" class="form-control" name="apply_ext" placeholder="Jr">
+                                        <label for="apply_ext">Ext.</label>
+                                   </div>
                               </div>
                          </div>
                          <div class="row mt-3">
                               <div class="col">
                                    <!-- course -->
-                                   <label for="apply_course" class="form-label">Course</label>
-                                   <select name="apply_course" class="form-select" aria-label="Select course">
-                                             <?php
-                                                  $query = $conn->query("SELECT * FROM tbl_course");
-
-                                                  foreach($query as $row) {
-                                             ?>
-                                             <option value="<?php echo $row['course_id'] ?>">
-                                                  <?php 
-                                                       $suffix;
-                                                       if($row['course_yearlevel'] == '1') {
-                                                            $suffix = 'st';
-                                                       }
-                                                       else if($row['course_yearlevel'] == '2') {
-                                                            $suffix = 'nd';
-                                                       }
-                                                       else if($row['course_yearlevel'] == '3') {
-                                                            $suffix = 'rd';
-                                                       }
-                                                       else {
-                                                            $suffix = 'th';
-                                                       }
-                                                       echo $row['course_name'].' - '.$row['course_yearlevel'].$suffix.' year';
+                                   <div class="form-floating">
+                                        <select name="apply_course" class="form-select" aria-label="Select course">
+                                                  <?php
+                                                       $query = $conn->query("SELECT * FROM tbl_course");
+     
+                                                       foreach($query as $row) {
                                                   ?>
-                                             </option>
-                                             <?php } ?>
-                                   </select>
+                                                  <option value="<?php echo $row['course_id'] ?>">
+                                                       <?php 
+                                                            $suffix;
+                                                            if($row['course_yearlevel'] == '1') {
+                                                                 $suffix = 'st';
+                                                            }
+                                                            else if($row['course_yearlevel'] == '2') {
+                                                                 $suffix = 'nd';
+                                                            }
+                                                            else if($row['course_yearlevel'] == '3') {
+                                                                 $suffix = 'rd';
+                                                            }
+                                                            else {
+                                                                 $suffix = 'th';
+                                                            }
+                                                            echo $row['course_name'].' - '.$row['course_yearlevel'].$suffix.' year';
+                                                       ?>
+                                                  </option>
+                                                  <?php } ?>
+                                        </select>
+                                        <label for="apply_course" class="form-label">Course</label>
+                                   </div>
                               </div>
                          </div>
 
@@ -83,13 +93,17 @@
                          <div class="row">
                               <!-- baranggay -->
                               <div class="col">
-                                   <label for="apply_brgy" class="form-label">Baranggay</label>
-                                   <input type="text" class="form-control" name="apply_brgy" placeholder="Brgy. Bigo" required>
+                                   <div class="form-floating">
+                                        <input type="text" class="form-control" name="apply_brgy" placeholder="Brgy. Bigo" required>
+                                        <label for="apply_brgy" class="form-label">Baranggay</label>
+                                   </div>
                               </div>
                               <!-- municipality -->
                               <div class="col">
-                                   <label for="apply_mnc" class="form-label">Municipality</label>
-                                   <input type="text" class="form-control" name="apply_mnc" placeholder="Kabankalan" required>
+                                   <div class="form-floating">
+                                        <input type="text" class="form-control" name="apply_mnc" placeholder="Kabankalan" required>
+                                        <label for="apply_mnc" class="form-label">Municipality</label>
+                                   </div>
                               </div>
                          </div>
 
@@ -99,37 +113,47 @@
                          <div class="row">
                               <!-- civil status -->
                               <div class="col">
-                                   <label for="apply_cs" class="form-label">Civil Status</label>
-                                   <select name="apply_cs" class="form-select" aria-label="civil status">
-                                        <option value="single" selected>Single</option>
-                                        <option value="married">Married</option>
-                                        <option value="widowed">Widowed</option>
-                                   </select>
+                                   <div class="form-floating">
+                                        <select name="apply_cs" class="form-select" aria-label="civil status">
+                                             <option value="single" selected>Single</option>
+                                             <option value="married">Married</option>
+                                             <option value="widowed">Widowed</option>
+                                        </select>
+                                        <label for="apply_cs" class="form-label">Civil Status</label>
+                                   </div>
                               </div>
                               <!-- citizenship -->
                               <div class="col">
-                                   <label for="apply_cz" class="form-label">Citizenship</label>
-                                   <input type="text" class="form-control" name="apply_cz" placeholder="What are you?" required>
+                                   <div class="form-floating">
+                                        <input type="text" class="form-control" name="apply_cz" placeholder="What are you?" required>
+                                        <label for="apply_cz" class="form-label">Citizenship</label>
+                                   </div>
                               </div>
                          </div>
                          <div class="row mt-3">
                               <!-- date of birth -->
                               <div class="col-6">
-                                   <label for="apply_date" class="form-label">Date of Birth</label>
-                                   <input type="date" class="form-control" name="apply_date" required>
+                                   <div class="form-floating">
+                                        <input type="date" class="form-control" name="apply_date" required>
+                                        <label for="apply_date" class="form-label">Date of Birth</label>
+                                   </div>
                               </div>
                               <!-- age -->
                               <div class="col-2">
-                                   <label for="apply_age" class="form-label">Age</label>
-                                   <input type="number" class="form-control" name="apply_age" required>
+                                   <div class="form-floating">
+                                        <input type="number" class="form-control" name="apply_age" required>
+                                        <label for="apply_age" class="form-label">Age</label>
+                                   </div>
                               </div>
                               <!-- gender -->
                               <div class="col-4">
-                                   <label for="apply_gd" class="form-label">Gender</label>
-                                   <select name="apply_gd" class="form-select" aria-label="gender">
-                                        <option value="male" selected>Male</option>
-                                        <option value="female">Female</option>
-                                   </select>
+                                   <div class="form-floating">
+                                        <select name="apply_gd" class="form-select" aria-label="gender">
+                                             <option value="male" selected>Male</option>
+                                             <option value="female">Female</option>
+                                        </select>
+                                        <label for="apply_gd" class="form-label">Gender</label>
+                                   </div>
                               </div>
                          </div>
 
@@ -139,13 +163,17 @@
                          <div class="row">
                               <!-- email address -->
                               <div class="col">
-                                   <label for="apply_em" class="form-label">Email Address</label>
-                                   <input type="email" class="form-control" name="apply_em" placeholder="youremail@email.com" required>
+                                   <div class="form-floating">
+                                        <input type="email" class="form-control" name="apply_em" placeholder="youremail@email.com" required>
+                                        <label for="apply_em" class="form-label">Email Address</label>
+                                   </div>
                               </div>
                               <!-- contact num -->
                               <div class="col">
-                                   <label for="apply_cn" class="form-label">Contact Number</label>
-                                   <input type="text" class="form-control" name="apply_cn" required>
+                                   <div class="form-floating">
+                                        <input type="text" class="form-control" name="apply_cn" placeholder="Contact num" required>
+                                        <label for="apply_cn">Contact Number</label>
+                                   </div>
                               </div>
                          </div>
 
@@ -155,100 +183,129 @@
                          <div class="row">
                               <!-- mother maiden name -->
                               <div class="col">
-                                   <label for="apply_mom" class="form-label">Mother's Full Maiden Name</label>
-                                   <input type="text" class="form-control" name="apply_mom" required>
+                                   <div class="form-floating">
+                                        <input type="text" class="form-control" name="apply_mom" placeholder="ur mum" required>
+                                        <label for="apply_mom" class="form-label">Mother's Full Maiden Name</label>
+                                   </div>
                               </div>
                               <!-- father name -->
                               <div class="col">
-                                   <label for="apply_dad" class="form-label">Father's Full Name</label>
-                                   <input type="text" class="form-control" name="apply_dad" required>
+                                   <div class="form-floating">
+                                        <input type="text" class="form-control" name="apply_dad" placeholder="ur dad" required>
+                                        <label for="apply_dad" class="form-label">Father's Full Name</label>
+                                   </div>
                               </div>
                          </div>
                          <div class="row mt-3">
                               <!-- mother age and occupation -->
                               <div class="col d-flex gap-3">
                                    <div class="col-3">
-                                        <label for="apply_mom_age" class="form-label">Age</label>
-                                        <input type="number" class="form-control" name="apply_mom_age" required>     
+                                        <div class="form-floating">
+                                             <input type="number" class="form-control" name="apply_mom_age" placeholder="age" required>     
+                                             <label for="apply_mom_age" class="form-label">Age</label>
+                                        </div>
                                    </div>
                                    <div class="col-8">
-                                        <label for="apply_mom_occ" class="form-label">Occupation</label>
-                                        <input type="text" class="form-control" name="apply_mom_occ" placeholder="Write NA if none" required>     
+                                        <div class="form-floating">
+                                             <input type="text" class="form-control" name="apply_mom_occ" placeholder="Write NA if none" required>     
+                                             <label for="apply_mom_occ" class="form-label">Occupation</label>
+                                        </div>
                                    </div>
                               </div>
                               <!-- father age and occupation -->
                               <div class="col d-flex gap-3">
                                    <div class="col-3">
-                                        <label for="apply_dad_age" class="form-label">Age</label>
-                                        <input type="number" class="form-control" name="apply_dad_age" required>     
+                                        <div class="form-floating">
+                                             <input type="number" class="form-control" name="apply_dad_age" placeholder="age" required>     
+                                             <label for="apply_dad_age" class="form-label">Age</label>
+                                        </div>
                                    </div>
                                    <div class="col-8">
-                                        <label for="apply_dad_occ" class="form-label">Occupation</label>
-                                        <input type="text" class="form-control" name="apply_dad_occ" placeholder="Write NA if none" required>     
+                                        <div class="form-floating">
+                                             <input type="text" class="form-control" name="apply_dad_occ" placeholder="Write NA if none" required>     
+                                             <label for="apply_dad_occ" class="form-label">Occupation</label>
+                                        </div>
                                    </div>
                               </div>
                          </div>
                          <div class="row mt-3">
                               <!-- mother education -->
                               <div class="col">
-                                   <label for="apply_mom_edu" class="form-label">Education Attainment</label>
-                                   <select name="apply_mom_edu" class="form-select" aria-label="education attainment">
-                                        <option value="none">None</option>
-                                        <option value="elementary" selected>Elementary</option>
-                                        <option value="high school">High School</option>
-                                        <option value="senior high school">Senior High School</option>
-                                        <option value="college">College</option>
-                                   </select>
+                                   <div class="form-floating">
+                                        <select name="apply_mom_edu" class="form-select" aria-label="education attainment">
+                                             <option value="none">None</option>
+                                             <option value="elementary" selected>Elementary</option>
+                                             <option value="high school">High School</option>
+                                             <option value="senior high school">Senior High School</option>
+                                             <option value="college">College</option>
+                                        </select>
+                                        <label for="apply_mom_edu" class="form-label">Education Attainment</label>
+                                   </div>
                               </div>
                               <!-- father education -->
                               <div class="col">
-                                   <label for="apply_dad_edu" class="form-label">Education Attainment</label>
-                                   <select name="apply_dad_edu" class="form-select" aria-label="education attainment">
-                                        <option value="none">None</option>
-                                        <option value="elementary" selected>Elementary</option>
-                                        <option value="high school">High School</option>
-                                        <option value="senior high school">Senior High School</option>
-                                        <option value="college">College</option>
-                                   </select>
+                                   <div class="form-floating">
+                                        <select name="apply_dad_edu" class="form-select" aria-label="education attainment">
+                                             <option value="none">None</option>
+                                             <option value="elementary" selected>Elementary</option>
+                                             <option value="high school">High School</option>
+                                             <option value="senior high school">Senior High School</option>
+                                             <option value="college">College</option>
+                                        </select>
+                                        <label for="apply_dad_edu" class="form-label">Education Attainment</label>
+                                   </div>
                               </div>
                          </div>
                          <div class="row mt-3">
                               <!-- mother address -->
                               <div class="col">
-                                   <label for="apply_mom_adr" class="form-label">Address</label>
-                                   <input type="text" class="form-control" name="apply_mom_adr" required>
+                                   <div class="form-floating">
+                                        <input type="text" class="form-control" name="apply_mom_adr" placeholder="address" required>     
+                                        <label for="apply_mom_adr" class="form-label">Address</label>
+                                   </div>
                               </div>
                               <!-- father address -->
                               <div class="col">
-                                   <label for="apply_dad_adr" class="form-label">Address</label>
-                                   <input type="text" class="form-control" name="apply_dad_adr" required>
+                                   <div class="form-floating">
+                                        <input type="text" class="form-control" name="apply_dad_adr" placeholder="address" required>     
+                                        <label for="apply_dad_adr" class="form-label">Address</label>
+                                   </div>
                               </div>
                          </div>
                          <div class="row mt-3">
                               <!-- mother contact -->
                               <div class="col">
-                                   <label for="apply_mom_cn" class="form-label">Contact Number</label>
-                                   <input type="text" class="form-control" name="apply_mom_cn" required>
+                                   <div class="form-floating">
+                                        <input type="text" class="form-control" name="apply_mom_cn" placeholder="contact" required>
+                                        <label for="apply_mom_cn" class="form-label">Contact Number</label>
+                                   </div>
                               </div>
                               <!-- father contact -->
                               <div class="col">
-                                   <label for="apply_dad_cn" class="form-label">Contact Number</label>
-                                   <input type="text" class="form-control" name="apply_dad_cn" required>
+                                   <div class="form-floating">
+                                        <input type="text" class="form-control" name="apply_dad_cn" placeholder="contact" required>
+                                        <label for="apply_dad_cn" class="form-label">Contact Number</label>
+                                   </div>
                               </div>
                          </div>
                          <div class="row mt-3">
                               <!-- total income -->
                               <div class="col-8">
-                                   <label for="apply_income" class="form-label">Salary Range</label>
-                                   <select name="apply_income" class="form-select" aria-label="education attainment">
-                                        <option value="below P10 000">Below P10,000</option>
-                                        <option value="P11 000 - P30 000">P11 000 - P30 000</option>
-                                        <option value="above P50 000">Above P50 000</option>
-                                   </select>
+                                   <div class="form-floating">
+                                        <select name="apply_income" class="form-select" aria-label="education attainment">
+                                             <option value="below P10 000">Below P10,000</option>
+                                             <option value="P11 000 - P30 000">P11 000 - P30 000</option>
+                                             <option value="above P50 000">Above P50 000</option>
+                                        </select>
+                                        <label for="apply_income" class="form-label">Salary Range</label>
+                                   </div>
                               </div>
+                              <!-- num of siblings -->
                               <div class="col-4">
-                                   <label for="apply_sibling" class="form-label">Number of Siblings</label>
-                                   <input type="number" class="form-control" name="apply_sibling" required>
+                                   <div class="form-floating">
+                                        <input type="number" class="form-control" name="apply_sibling" placeholder="sibling" required>
+                                        <label for="apply_sibling" class="form-label">Number of Siblings</label>
+                                   </div>
                               </div>
                          </div>
                     </div>
