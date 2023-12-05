@@ -31,7 +31,8 @@
      $totalIncome   = $_POST['apply_income'];
      $numSibling    = $_POST['apply_sibling'];
 
-     $status = 'pending';
+     $status        = 'pending';
+     $currentDate = date('Y-m-d');
      // kadamo depoga
 
      require_once '../../php/config.php';
@@ -95,18 +96,19 @@
                               `scholar_email`, 
                               `scholar_num`,
                               `scholar_status`,
-                              `scholar_reqBy`
+                              `scholar_reqBy`,
+                              `scholar_dateOfReq`
                          ) 
-                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
                     );
                     $query->bind_param(
-                         'sssssssssssssssss', 
+                         'ssssssssssssssssss', 
                          $course, $famID,
                          $lastName, $firstName, $middleName, $extension,
                          $baranggay, $municipality,
                          $civilStatus, $citizenship, $dateOfBirth, $age, $gender,
                          $email, $contactNum,
-                         $status, $reqBy
+                         $status, $reqBy, $currentDate
                     );
                     $query->execute();
 

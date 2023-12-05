@@ -1,629 +1,161 @@
+<?php
+	require_once '../php/config.php';
+	session_start();
+
+	$sessionID = $_SESSION['sessionID'];
+	
+	if(!isset($sessionID)) {
+		header('Location: ../login/index.php');
+	} else {
+		$authquery = $conn->query("SELECT user_type FROM tbl_user WHERE user_id = '$sessionID'");
+		$auth = $authquery->fetch_column();
+
+		if($auth!='1') {
+			header('Location: ../login/index.php');
+		}
+	}
+	
+	$query = $conn->query("SELECT user_fullname FROM tbl_user WHERE user_id = '$sessionID'");
+	$user = $query->fetch_column();
+?>
+
 <!DOCTYPE html>
-<!-- Coding by CodingNepal | www.codingnepalweb.com -->
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-    <title> Responsiive Admin Dashboard | CodingLab </title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Boxicons CDN Link -->
-     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <style> 
-     /* Googlefont Poppins CDN Link */
-     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-.sidebar{
-  position: fixed;
-  height: 100%;
-  width: 240px;
-  background: #0A2558;
-  transition: all 0.5s ease;
-}
-.sidebar.active{
-  width: 60px;
-}
-.sidebar .logo-details{
-  height: 80px;
-  display: flex;
-  align-items: center;
-  
-}
-.sidebar .logo-details i{
-  font-size: 28px;
-  font-weight: 500;
-  color: #fff;
-  min-width: 60px;
-  text-align: center;
+	<head>
+		<meta charset="UTF-8">
+		<title> Responsiive Schola Dashboard | CodingLab </title>
+		<!-- Boxicons CDN Link -->
+		<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../src/extensions/bootstrap.css">
+		<link rel="stylesheet" href="style.css">
 
-}
-.sidebar .logo-details .logo_name{
-  color: #fff;
-  font-size: 24px;
-  font-weight: 500;
-  margin: 10px 0 0 130px;
-}
-.sidebar .nav-links{
-  margin-top: 10px;
-}
-.sidebar .nav-links li{
-  position: relative;
-  list-style: none;
-  height: 50px;
-}
-.sidebar .nav-links li a{
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  transition: all 0.4s ease;
-}
-.sidebar .nav-links li a.active{
-  background: #081D45;
-}
-.sidebar .nav-links li a:hover{
-  background: #081D45;
-}
-.sidebar .nav-links li i{
-  min-width: 60px;
-  text-align: center;
-  font-size: 17px;
-  color: #fff;
-}
-.sidebar .nav-links li a .links_name{
-  color: #fff;
-  font-size: 14px;
-  font-weight: 400;
-  white-space: nowrap;
-}
-.sidebar .nav-links .log_out{
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-.home-section{
-  position: relative;
-  background: #f5f5f5;
-  min-height: 100vh;
-  width: calc(100% - 240px);
-  left: 240px;
-  transition: all 0.5s ease;
-}
-.sidebar.active ~ .home-section{
-  width: calc(100% - 60px);
-  left: 60px;
-}
-.home-section nav{
-  display: flex;
-  justify-content: space-between;
-  height: 80px;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  position: fixed;
-  width: calc(100% - 240px);
-  left: 240px;
-  z-index: 100;
-  padding: 0 20px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-  transition: all 0.5s ease;
-}
-.sidebar.active ~ .home-section nav{
-  left: 60px;
-  width: calc(100% - 60px);
-}
-.home-section nav .sidebar-button{
-  display: flex;
-  align-items: center;
-  font-size: 24px;
-  font-weight: 500;
-}
-nav .sidebar-button i{
-  font-size: 35px;
-  margin-right: 10px;
-}
-.home-section nav .search-box{
-  position: relative;
-  height: 50px;
-  max-width: 550px;
-  width: 100%;
-  margin: 0 20px;
-}
-nav .search-box input{
-  height: 100%;
-  width: 100%;
-  outline: none;
-  background: #F5F6FA;
-  border: 2px solid #EFEEF1;
-  border-radius: 6px;
-  font-size: 18px;
-  padding: 0 15px;
-}
-nav .search-box .bx-search{
-  position: absolute;
-  height: 40px;
-  width: 40px;
-  background: #2697FF;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  border-radius: 4px;
-  line-height: 40px;
-  text-align: center;
-  color: #fff;
-  font-size: 22px;
-  transition: all 0.4 ease;
-}
-.home-section nav .profile-details{
-  display: flex;
-  align-items: center;
-  background: #F5F6FA;
-  border: 2px solid #EFEEF1;
-  border-radius: 6px;
-  height: 50px;
-  min-width: 190px;
-  padding: 0 15px 0 2px;
-}
-nav .profile-details img{
-  height: 40px;
-  width: 40px;
-  border-radius: 6px;
-  object-fit: cover;
-}
-nav .profile-details .admin_name{
-  font-size: 15px;
-  font-weight: 500;
-  color: #333;
-  margin: 0 10px;
-  white-space: nowrap;
-}
-nav .profile-details i{
-  font-size: 25px;
-  color: #333;
-}
-.home-section .home-content{
-  position: relative;
-  padding-top: 104px;
-}
-.home-content .overview-boxes{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 0 20px;
-  margin-bottom: 26px;
-}
-.overview-boxes .box{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: calc(100% / 4 - 15px);
-    background: #78b8bf;
-    padding: 15px 14px;
-    border-radius: 12px;
-    box-shadow: 4px 7px 9px black;
-    margin: 150px 0 0 15px;
-    height: 155px;
-}
-.overview-boxes .box-topic{
-  font-size: 20px;
-  font-weight: 500;
-}
-.home-content .box .number{
-  display: inline-block;
-  font-size: 35px;
-  margin-top: -6px;
-  font-weight: 500;
-}
-.home-content .box .indicator{
-  display: flex;
-  align-items: center;
-}
-.home-content .box .indicator i{
-  height: 20px;
-  width: 20px;
-  background: #8FDACB;
-  line-height: 20px;
-  text-align: center;
-  border-radius: 50%;
-  color: #fff;
-  font-size: 20px;
-  margin-right: 5px;
-}
-.box .indicator i.down{
-  background: #e87d88;
-}
-.home-content .box .indicator .text{
-  font-size: 12px;
-}
-.home-content .box .cart{
-  display: inline-block;
-  font-size: 32px;
-  height: 50px;
-  width: 50px;
-  background: #cce5ff;
-  line-height: 50px;
-  text-align: center;
-  color: #66b0ff;
-  border-radius: 12px;
-  margin: -15px 0 0 6px;
-}
-.home-content .box .cart.two{
-   color: #2BD47D;
-   background: #C0F2D8;
- }
-.home-content .box .cart.three{
-   color: #ffc233;
-   background: #ffe8b3;
- }
-.home-content .box .cart.four{
-   color: #e05260;
-   background: #f7d4d7;
- }
-.home-content .total-order{
-  font-size: 20px;
-  font-weight: 500;
-}
-.home-content .sales-boxes{
-  display: flex;
-  justify-content: space-between;
-  /* padding: 0 20px; */
-}
+		<script src="../../src/extensions/echarts.min.js"></script>
+	</head>
 
-/* left box */
-.home-content .sales-boxes .recent-sales{
-  width: 65%;
-  background: #fff;
-  padding: 20px 30px;
-  margin: 0 20px;
-  border-radius: 12px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-}
-.home-content .sales-boxes .sales-details{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.sales-boxes .box .title{
-  font-size: 24px;
-  font-weight: 500;
-  /* margin-bottom: 10px; */
-}
-.sales-boxes .sales-details li.topic{
-  font-size: 20px;
-  font-weight: 500;
-}
-.sales-boxes .sales-details li{
-  list-style: none;
-  margin: 8px 0;
-}
-.sales-boxes .sales-details li a{
-  font-size: 18px;
-  color: #333;
-  font-size: 400;
-  text-decoration: none;
-}
-.sales-boxes .box .button{
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
-.sales-boxes .box .button a{
-  color: #fff;
-  background: #0A2558;
-  padding: 4px 12px;
-  font-size: 15px;
-  font-weight: 400;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-.sales-boxes .box .button a:hover{
-  background:  #0d3073;
-}
+	<body class="">
+		<div class="d-flex h-100">
+			<!-- the side bar where nav is placed -->
+			<div class="sidebar d-flex flex-column px-0 mx-0 position-relative">
+				<div class="layer position-absolute top-0 start-0 w-100 h-100"></div>
 
-/* Right box */
-.home-content .sales-boxes .top-sales{
-  width: 35%;
-  background: #fff;
-  padding: 20px 30px;
-  margin: 0 20px 0 0;
-  border-radius: 12px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-}
-.sales-boxes .top-sales li{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 10px 0;
-}
-.sales-boxes .top-sales li a img{
-  height: 40px;
-  width: 40px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-right: 10px;
-  background: #333;
-}
-.sales-boxes .top-sales li a{
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-.sales-boxes .top-sales li .product,
-.price{
-  font-size: 17px;
-  font-weight: 400;
-  color: #333;
-}
-/* Responsive Media Query */
-@media (max-width: 1240px) {
-  .sidebar{
-    width: 60px;
-  }
-  .sidebar.active{
-    width: 220px;
-  }
-  .home-section{
-    width: calc(100% - 60px);
-    left: 60px;
-  }
-  .sidebar.active ~ .home-section{
-    /* width: calc(100% - 220px); */
-    overflow: hidden;
-    left: 220px;
-  }
-  .home-section nav{
-    width: calc(100% - 60px);
-    left: 60px;
-  }
-  .sidebar.active ~ .home-section nav{
-    width: calc(100% - 220px);
-    left: 220px;
-  }
-}
-@media (max-width: 1150px) {
-  .home-content .sales-boxes{
-    flex-direction: column;
-  }
-  .home-content .sales-boxes .box{
-    width: 100%;
-    overflow-x: scroll;
-    margin-bottom: 30px;
-  }
-  .home-content .sales-boxes .top-sales{
-    margin: 0;
-  }
-}
-@media (max-width: 1000px) {
-  .overview-boxes .box{
-    width: calc(100% / 2 - 15px);
-    margin-bottom: 15px;
-  }
-}
-@media (max-width: 700px) {
-  nav .sidebar-button .dashboard,
-  nav .profile-details .admin_name,
-  nav .profile-details i{
-    display: none;
-  }
-  .home-section nav .profile-details{
-    height: 50px;
-    min-width: 40px;
-  }
-  .home-content .sales-boxes .sales-details{
-    width: 560px;
-  }
-}
-@media (max-width: 550px) {
-  .overview-boxes .box{
-    width: 100%;
-    margin-bottom: 15px;
-  }
-  .sidebar.active ~ .home-section nav .profile-details{
-    display: none;
-  }
-}
-  @media (max-width: 400px) {
-  .sidebar{
-    width: 0;
-  }
-  .sidebar.active{
-    width: 60px;
-  }
-  .home-section{
-    width: 100%;
-    left: 0;
-  }
-  .sidebar.active ~ .home-section{
-    left: 60px;
-    width: calc(100% - 60px);
-  }
-  .home-section nav{
-    width: 100%;
-    left: 0;
-  }
-  .sidebar.active ~ .home-section nav{
-    left: 60px;
-    width: calc(100% - 60px);
-  }
-}
-.logo{
-    position: absolute;
-    left: -186px;
-    width: 120px;
-    height: 95px;
-    margin: 9px 0 0 174px; 
-    }
-    h1{
-    margin: 195px 0 0 -245%;
-    font-size: 28px;
-    font-family: arial;
-    color: #040329;
-    text-shadow: 1px 5px 5px gray;
+				<!-- logo above the links -->
+				<div class="logo-details d-flex align-items-center mb-2 position-relative z-1">
+					<img src="../../src/assets/img/logo.png" class="logo">
+					<span class="logo_name" style="letter-spacing: 5px;">ASMS</span>
+				</div>
 
-    }
-    h2{
-      margin: 165% 0 0 -395%;
-      font-weight: 400;
-      font-size: 22px;
+				<div class="nav-links d-flex flex-column pe-0 position-relative z-1">
+					<div class="" id="overview_tab">
+						<a href="#" class="active">
+							<i class='bx bx-grid-alt' ></i>
+							<span class="links_name">Overview</span>
+						</a>
+					</div>
+					<div class="" id="applicationView_tab">
+						<a href="#">
+							<i class='bx bx-user'></i>
+							<span class="links_name">Application List</span>
+						</a>
+					</div>
+					<div class="" id="scholars_tab">
+						<a href="#">
+							<i class='bx bx-user'></i>
+							<span class="links_name">Scholars</span>
+						</a>
+					</div>
+					<div class="" id="viewCourse_tab">
+						<a href="#">
+							<i class='bx bxs-graduation' ></i>
+							<span class="links_name">Schedules</span>
+						</a>
+					</div>
+					<div class="">
+						<a href="#">
+							<i class='bx bxs-file-blank' ></i>
+							<span class="links_name">Courses</span>
+						</a>
+					</div>
+					<div class="">
+						<a href="#">
+							<i class='bx bxs-bell-ring' ></i>
+							<span class="links_name">Placeholder</span>
+						</a>
+					</div>
+				</div>
+			</div>
 
-    }
-    .dashboard{
-      font-size: 17px;
-    }
-    
-    </style>
-   </head>
-<body>
-  <div class="sidebar">
-    <div class="logo-details">
-    <img src="logo.png" class="logo">
-      <span class="logo_name">ASMS</span>
-    </div>
-      <ul class="nav-links">
-        <li>
-          <a href="#" class="active">
-            <i class='bx bx-grid-alt' ></i>
-            <span class="links_name">Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="admin.php">
-            <i class="bx bxs-user-rectangle"></i>
-            <span class="links_name">Admin Info</span>
-          </a>
-        </li>
-        <li>
-          <a href="adminViewScholarInfo.php">
-            <i class="bx bx-food-menu"></i>
-            <span class="links_name">Scholar Personal </br> Information</span>
-          </a>
-        </li>
-        <li>
-          <a href="adminViewScholarFam.php">
-            <i class="bx bx-book-content"></i>
-            <span class="links_name">Scholar Family </br> Information </span>
-          </a>
-        </li>
-        <li>
-          <a href="adminViewScholarCourse.php">
-            <i class="bx bxs-graduation"></i>
-            <span class="links_name">Scholar Course</span>
-          </a>
-        </li>
-        <li>
-          <a href="sched.php">
-            <i class="bx bx-calendar"></i>
-            <span class="links_name">Schedule</span>
-          </a>
-        </li>
-        <li>
-          <a href="notif.php">
-            <i class='bx bx-notification' ></i>
-            <span class="links_name"> Notification</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class='bx bx-message-square-dots' ></i>
-            <span class="links_name">Messages</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class='bx bxs-bell-ring' ></i>
-            <span class="links_name">Updates</span>
-          </a>
-        </li>
-        <li class="log_out">
-          <a href="../login/index.php">
-            <i class='bx bx-log-out'></i>
-            <span class="links_name">Log out</span>
-          </a>
-        </li>
-      </ul>
-  </div>
-  <section class="home-section">
-    <nav>
-      <div class="sidebar-button">
-        <i class='bx bx-menu sidebarBtn'></i>
-        <span class="dashboard">Admin Dashboard</span>
-      </div>
-      <div class="search-box">
-        <input type="text" placeholder="Search...">
-        <i class='bx bx-search' ></i>
-      </div>
-      <div class="profile-details">
-        <img src="angel.png" alt="">
-        <span class="admin_name">Angela</span>
-        <i class='bx bx-chevron-down' ></i>
-      </div>
-      <div>  <h1> Welcome to Assistance Scholarship Management System</h1> </div>
-      <div> <h2> Carlos Hilado Memorial State University (Alijis Campus) </h2> </div>
-    </nav>
-    
-    <div class="home-content">
-      <div class="overview-boxes">
-        <div class="box">
-          <div class="right-side">
-            <div class="box-topic">Scholars </br> (Alijis)</div>
-            <div class="number">50</div>
-            <div class="indicator">
-              <i class='bx bx-up-arrow-alt'></i>
-              <span class="text">Up from yesterday</span>
-            </div>
+			<div class="content d-flex flex-column px-0 mx-0">
+				<!-- the nav bar above -->
+				<div class="nav-top shadow-sm d-flex align-items-center px-3 py-2">
+					<div class="col-10 align-items-center d-flex">
+						<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-clipboard-data-fill me-2 nav-heading-icon" viewBox="0 0 16 16">
+							<path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/>
+							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5zM10 8a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm4-3a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1"/>
+						</svg>
+						<h4 id="nav-heading" class="nav-heading m-0">Admin Dashboard</h4>
+					</div>
+					<div class="col-2 d-flex justify-content-end">
+						<div class="dropdown">
+							<button class="btn d-flex align-items-center gap-2 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<img src="../../src/assets/img/test-profile.png" class="rounded" alt="" style="width: 2.5rem; height: 2.5rem;">
+							<?php echo $user; ?>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<a class="dropdown-item d-flex align-items-center py-2" href="#">
+									<i class='bx bxs-contact fs-3 me-3'></i>
+									Admin
+									</a>
+								</li>
+								<li>
+									<a class="dropdown-item d-flex align-items-center py-2" href="../php/logout.php">
+									<i class='bx bxs-log-out fs-3 me-3' ></i>
+									Log out
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<!-- this <main> element is where the content of each tabs are displayed. Refer to your script.js to know what is displayed here -->
+				<main class="px-0">
+					<!-- content here -->
+				</main>
+			</div>
+		</div>
+
+		<!-- toasts area -->
+          <div class="success toast position-fixed top-0 end-0 z-3 m-3 slideRight" role="alert" aria-live="assertive" aria-atomic="true">
+               <div class="toast-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-check-square-fill me-2 text-success" viewBox="0 0 16 16">
+                         <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
+                    </svg>
+                    <strong class="me-auto text-success">Success</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+               </div>
+               <div class="toast-body">
+                    message
+               </div>
           </div>
-        </div>
-        <div class="box">
-          <div class="right-side">
-            <div class="box-topic">Total Assistance</div>
-            <div class="number">200,000</div>
-            <div class="indicator">
-              <i class='bx bx-up-arrow-alt'></i>
-              <span class="text">Up from yesterday</span>
-            </div>
-          </div>
-        </div>
-        <div class="box">
-          <div class="right-side">
-            <div class="box-topic">Total Scholars </br> (All campus)</div>
-            <div class="number">200</div>
-            <div class="indicator">
-              <i class='bx bx-up-arrow-alt'></i>
-              <span class="text">Up from yesterday</span>
-            </div>
-          </div>
-        </div>
-        <div class="box">
-          <div class="right-side">
-            <div class="box-topic">Total Assitance</div>
-            <div class="number">800,000</div>
-            <div class="indicator">
-            <i class='bx bx-up-arrow-alt'></i>
-              <span class="text">Up from yesterday</span>
-            </div>
-            </div>
-        </div>
-      </div>
 
+		<div class="alert toast position-fixed top-0 end-0 z-3 m-3 slideRight" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="toast-header">
+				<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-check-square-fill me-2 text-danger" viewBox="0 0 16 16">
+					<path d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+				</svg>
+				<strong class="me-auto text-danger">Alert</strong>
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+			<div class="toast-body">
+				message
+			</div>
+		</div>
 
-  <script>
-   let sidebar = document.querySelector(".sidebar");
-let sidebarBtn = document.querySelector(".sidebarBtn");
-sidebarBtn.onclick = function() {
-  sidebar.classList.toggle("active");
-  if(sidebar.classList.contains("active")){
-  sidebarBtn.classList.replace("bx-menu" ,"bx-menu-alt-right");
-}else
-  sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-}
- </script>
-
-</body>
+		<script src="../../src/extensions/jquery-up.js"></script>
+		<script src="../../src/extensions/popper.js"></script>
+		<script src="../../src/extensions/bootstrap.js"></script>
+		<script src="script.js"></script>
+	</body>
 </html>
