@@ -8,7 +8,7 @@
      require_once '../../php/config.php';
 
      function passwordMatch($a, $b) {
-          $x;
+          $x = null;
 
           if($b !== $a) {
                $x = true;

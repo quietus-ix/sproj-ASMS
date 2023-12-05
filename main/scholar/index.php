@@ -49,7 +49,7 @@
 							<span class="links_name">Your Application</span>
 						</a>
 					</div>
-					<div class="">
+					<div class="" id="viewCourse_tab">
 						<a href="#">
 							<i class='bx bxs-graduation' ></i>
 							<span class="links_name">Course</span>
