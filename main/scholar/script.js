@@ -27,9 +27,27 @@ $(document).ready(function(){
                }
           });
      }
+     function viewCourse() {
+          $.ajax({
+               url: 'viewCourse.php',
+               method: 'GET',
+               success: function(data) {
+                  $('main').html(data);
+               }
+          });
+     }
 
      dashboard(); // calls the function to load the dashboard
 
+     $('#viewCourse_tab').on('click', ()=>{
+          viewCourse();
+
+          $('.nav-links div a').removeClass('active');
+          $('#dashboard_tab a').addClass('active');
+
+          $('.nav-heading-icon').html('<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M20 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zm-1 4v2h-5V7h5zm-5 4h5v2h-5v-2zM4 19V5h7v14H4z"></path></svg>');
+          $('.nav-heading').html('Available Course');
+     });
      $('#dashboard_tab').on('click', ()=>{
           dashboard();
 
