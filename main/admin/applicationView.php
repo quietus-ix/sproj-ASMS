@@ -20,3 +20,25 @@
                          - opens a modal to send a note about the reason why the form is rejected
                     - concluded (?) i dunno the term
 -->
+
+<div class="d-flex flex-column p-3">
+
+     <table class="table" id="application_table">
+          <thead>
+               <tr>
+                    <td></td>
+               </tr>
+          </thead>
+          <tbody>
+               <tr>
+                    <td></td>
+               </tr>
+          </tbody>
+          <tfoot>
+               <tr>
+                    <td></td>
+               </tr>
+          </tfoot>
+     </table>
+
+</div>

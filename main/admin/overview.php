@@ -8,16 +8,13 @@
      $numOfApp = array();
      $i = 0;
 
-     /* save
-          BETWEEN MAKEDATE(YEAR(CURDATE()), 1) AND 
-                    MAKEDATE(YEAR(CURDATE()), IF(MOD(YEAR(CURDATE()), 4), 365, 366))"
-      */
      $query = $conn->query(
           "SELECT * 
           FROM tbl_scholar_application 
           WHERE scholar_dateOfReq
                BETWEEN MAKEDATE('$currentYear', 1) AND 
-                    MAKEDATE(YEAR(CURDATE()), IF(MOD(YEAR(CURDATE()), 4), 365, 366))"
+                    MAKEDATE(YEAR(CURDATE()), IF(MOD(YEAR(CURDATE()), 4), 365, 366))
+               ORDER BY MONTH(scholar_dateOfReq) ASC"
      );
      
      if($query->num_rows > 0) {
@@ -36,10 +33,18 @@
 
                $fetchCount = $getCount->fetch_column();
 
-               $month[$i] = $dismonth;
-               $numOfApp[$i] = $fetchCount;
+               $month[$i]     = $dismonth;
+               $numOfApp[$i]  = $fetchCount;
 
-               $i++;
+               if($i > 0) { // once the index reaches greater than 1
+                    if(strcmp($dismonth, $month[$i-1]) === 0) { // this statement will compare the $dismonth and the last index of $month
+                         $i--; // if duplicate, decrement the array index to store the data there again
+                    }
+                    $i++;
+               } else {
+                    $i++;
+               }
+               
           }
      }
 ?>

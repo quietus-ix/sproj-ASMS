@@ -28,6 +28,7 @@
 		<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="../../src/extensions/bootstrap.css">
+		<link rel="stylesheet" href="../../src/extensions/datatables/datatables.css">
 		<link rel="stylesheet" href="style.css">
 
 		<script src="../../src/extensions/echarts.min.js"></script>
@@ -156,6 +157,7 @@
 		<script src="../../src/extensions/jquery-up.js"></script>
 		<script src="../../src/extensions/popper.js"></script>
 		<script src="../../src/extensions/bootstrap.js"></script>
+		<script src="../../src/extensions/datatables/datatables.js"></script>
 		<script src="script.js"></script>
 	</body>
 </html>

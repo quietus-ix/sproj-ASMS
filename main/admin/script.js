@@ -10,6 +10,47 @@ $(document).ready(function(){
           });
      }
 
+     function loadTableInterface(src, table) {
+          $.ajax({
+               url: src,
+               method: 'GET',
+               success: function(data) {
+                  $('main').html(data);
+         
+                  new DataTable(table, {
+                     initComplete: function () {
+                           this.api()
+                              .columns([1])
+                              .every(function () {
+                                    let column = this;
+                     
+                                    let select = document.createElement('select');
+                                    select.add(new Option(''));
+                                    column.footer().replaceChildren(select);
+                     
+                                    select.addEventListener('change', function () {
+                                       var val = DataTable.util.escapeRegex(select.value);
+                     
+                                       column
+                                          .search(val ? '^' + val + '$' : '', true, false)
+                                          .draw();
+                                    });
+                     
+                                    // Add list of options
+                                    column
+                                       .data()
+                                       .unique()
+                                       .sort()
+                                       .each(function (d, j) {
+                                          select.add(new Option(d));
+                                       });
+                           });
+                     }
+                  });
+               }
+          });
+     }
+
      loadInterface('overview.php');
 
      /*
@@ -25,7 +66,7 @@ $(document).ready(function(){
           $('.nav-heading').html('Admin Dashboard');
      });
      $('.content main, .sidebar').on('click', '#applicationView_tab', ()=>{
-          loadInterface('applicationView.php');
+          loadTableInterface('applicationView.php', '#application_table');
 
           $('.nav-links div a').removeClass('active');
           $('#applicationView_tab a').addClass('active');
@@ -37,7 +78,5 @@ $(document).ready(function(){
           end ==========
      */
 
-     /*
-          dashboard action events
-     */
+    $('content main #application_table')
 });
