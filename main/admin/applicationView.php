@@ -1,26 +1,3 @@
-<!-- TODO: this 
-     
-     # plans
-          - basically, this will display all the application forms that the user has sent so that the ADMIN can review it
-          - what displayed in the application forms table depends on what filter is selected:
-               - e.g. pending application forms only shows pendi- you get the point.
-               - holy brocolli i need to stop being overspecific
-          - the row has the following display:
-               - application form id
-               - application recepient
-               - application status
-               - dropdown element
-          - admin has the following controls:
-               - row clicked: shows the information of the application form
-               - dropdown action:
-                    - approve
-                         - opens a modal to give the approved form a schedule and an additional note
-                         - sends an SMS notification to the user (API)
-                    - reject
-                         - opens a modal to send a note about the reason why the form is rejected
-                    - concluded (?) i dunno the term
--->
-
 <?php
      require_once '../php/config.php';
 
@@ -29,13 +6,14 @@
           INNER JOIN tbl_scholar_family AS b
                ON a.scholar_family = b.sfam_id
           INNER JOIN tbl_course AS c
-               ON a.scholar_course = c.course_id"
+               ON a.scholar_course = c.course_id
+          WHERE scholar_status != 'verified'"
      );
 ?>
 
-<div class="d-flex flex-column p-3 h-100">
+<div class="d-flex flex-column p-3 h-100 rounded">
 
-     <table class="table border display compact hover rounded" id="application_table">
+     <table class="table border display hover" id="application_table">
           <thead>
                <tr>
                     <th>ID</th>
@@ -62,19 +40,17 @@
                          ?>
                     </td>
                     <td><?php echo $row['course_name'].' - '.$row['course_yearlevel'] ?></td>
-                    <td class="
-                         <?php 
+                    <td class="<?php 
                               if($row['scholar_status'] === 'pending') {
-                                   echo 'text-info-emphasis';
+                                   echo 'pending';
                               } else if($row['scholar_status'] === 'approved') {
-                                   echo 'text-success-emphasis';
+                                   echo 'approved';
                               } else if($row['scholar_status'] === 'modified') {
-                                   echo 'text-warning-emphasis';
+                                   echo 'modified';
                               } else if($row['scholar_status'] === 'rejected') {
-                                   echo 'text-danger-emphasis';
+                                   echo 'rejected';
                               }
-                         ?>
-                         "
+                         ?>"
                     >
                          <?php echo $row['scholar_status'] ?>
                     </td>

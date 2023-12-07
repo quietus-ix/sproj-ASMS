@@ -47,84 +47,95 @@
           session_start();
 
           $reqBy = $_SESSION['sessionID'];
-
-          $query = $conn->prepare(
-               "INSERT INTO `tbl_scholar_family`( 
-                    `sfam_f_name`, 
-                    `sfam_f_age`, 
-                    `sfam_f_address`, 
-                    `sfam_f_occupation`, 
-                    `sfam_f_eduAttainment`, 
-                    `sfam_f_mobileNum`, 
-                    `sfam_m_name`, 
-                    `sfam_m_age`, 
-                    `sfam_m_address`, 
-                    `sfam_m_occupation`, 
-                    `sfam_m_eduAttainment`, 
-                    `sfam_m_mobileNum`, 
-                    `sfam_totalSalary`, 
-                    `sfam_numSiblings`
-               ) 
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-          );
-          $query->bind_param(
-               "ssssssssssssss", 
-               $f_name, $f_age, $f_address, $f_occupation, $f_education, $f_contactNum,
-               $m_name, $m_age, $m_address, $m_occupation, $m_education, $m_contactNum,
-               $totalIncome, $numSibling
-          );
-          $query->execute();
           
-          $famID = $conn->insert_id; // get the last ID of the query above
+          $check = $conn->query(
+               "SELECT scholar_reqBy FROM tbl_scholar_application
+               WHERE scholar_reqBy = '$reqBy'"
+          );
 
-          if($query) { // if the query above is successful
-               $query = $conn->prepare(
-                         "INSERT INTO `tbl_scholar_application`(
-                              `scholar_course`, 
-                              `scholar_family`, 
-                              `scholar_ln`, 
-                              `scholar_fn`, 
-                              `scholar_mn`, 
-                              `scholar_ext`, 
-                              `scholar_brgy`, 
-                              `scholar_muni`, 
-                              `scholar_civStatus`, 
-                              `scholar_citizenship`, 
-                              `scholar_dob`, 
-                              `scholar_age`, 
-                              `scholar_gender`, 
-                              `scholar_email`, 
-                              `scholar_num`,
-                              `scholar_status`,
-                              `scholar_reqBy`,
-                              `scholar_dateOfReq`
-                         ) 
-                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-                    );
-                    $query->bind_param(
-                         'ssssssssssssssssss', 
-                         $course, $famID,
-                         $lastName, $firstName, $middleName, $extension,
-                         $baranggay, $municipality,
-                         $civilStatus, $citizenship, $dateOfBirth, $age, $gender,
-                         $email, $contactNum,
-                         $status, $reqBy, $currentDate
-                    );
-                    $query->execute();
-
-                    if($query) {
-                         echo json_encode(array(
-                              "type"    =>"success",
-                              "msg"     =>"Application successfully submitted! You may view your application details in Application tab"
-                         ));
-                    }
-          }
-          else {
+          if($check->num_rows > 0) {
                echo json_encode(array(
                     "type"    =>"error",
-                    "msg"     =>"Error inserting family background"
+                    "msg"     =>"You already submitted a scholar application form"
                ));
+          } else {
+               $query = $conn->prepare(
+                    "INSERT INTO `tbl_scholar_family`( 
+                         `sfam_f_name`, 
+                         `sfam_f_age`, 
+                         `sfam_f_address`, 
+                         `sfam_f_occupation`, 
+                         `sfam_f_eduAttainment`, 
+                         `sfam_f_mobileNum`, 
+                         `sfam_m_name`, 
+                         `sfam_m_age`, 
+                         `sfam_m_address`, 
+                         `sfam_m_occupation`, 
+                         `sfam_m_eduAttainment`, 
+                         `sfam_m_mobileNum`, 
+                         `sfam_totalSalary`, 
+                         `sfam_numSiblings`
+                    ) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+               );
+               $query->bind_param(
+                    "ssssssssssssss", 
+                    $f_name, $f_age, $f_address, $f_occupation, $f_education, $f_contactNum,
+                    $m_name, $m_age, $m_address, $m_occupation, $m_education, $m_contactNum,
+                    $totalIncome, $numSibling
+               );
+               $query->execute();
+               
+               $famID = $conn->insert_id; // get the last ID of the query above
+     
+               if($query) { // if the query above is successful
+                    $query = $conn->prepare(
+                              "INSERT INTO `tbl_scholar_application`(
+                                   `scholar_course`, 
+                                   `scholar_family`, 
+                                   `scholar_ln`, 
+                                   `scholar_fn`, 
+                                   `scholar_mn`, 
+                                   `scholar_ext`, 
+                                   `scholar_brgy`, 
+                                   `scholar_muni`, 
+                                   `scholar_civStatus`, 
+                                   `scholar_citizenship`, 
+                                   `scholar_dob`, 
+                                   `scholar_age`, 
+                                   `scholar_gender`, 
+                                   `scholar_email`, 
+                                   `scholar_num`,
+                                   `scholar_status`,
+                                   `scholar_reqBy`,
+                                   `scholar_dateOfReq`
+                              ) 
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                         );
+                         $query->bind_param(
+                              'ssssssssssssssssss', 
+                              $course, $famID,
+                              $lastName, $firstName, $middleName, $extension,
+                              $baranggay, $municipality,
+                              $civilStatus, $citizenship, $dateOfBirth, $age, $gender,
+                              $email, $contactNum,
+                              $status, $reqBy, $currentDate
+                         );
+                         $query->execute();
+     
+                         if($query) {
+                              echo json_encode(array(
+                                   "type"    =>"success",
+                                   "msg"     =>"Application successfully submitted! You may view your application details in Application tab"
+                              ));
+                         }
+               }
+               else {
+                    echo json_encode(array(
+                         "type"    =>"error",
+                         "msg"     =>"Error inserting family background"
+                    ));
+               }
           }
-          
      }
 ?>

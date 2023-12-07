@@ -132,6 +132,11 @@ $(document).ready(function(){
                     }
                });
           });
+     
+     $('main').on('click', '#reject_btn', function() {
+          $('main .reject-container').toggleClass('d-none', 'd-flex');
+          $('main .approve-container').removeClass('d-flex').addClass('d-none');
+     });
           $('main').on('click', '#reject_confirm', function() {
                let formID          = $('#application_id').val();
                let formNote        = $('#reject_note').val();
@@ -174,12 +179,60 @@ $(document).ready(function(){
                });
           });
 
+     /*
+          modal scripts for finalization
+     */
+    let req;
+     $('main').on('click', '#confirmScholar_btn', function() {
+          req = 'confirmScholar';
+          $('#confirm_label').html('Notice');
+          $('#confirm_modal .modal-body').html('Finalize this application form and make them a scholar?');
+     });
+     $('main').on('click', '#deleteScholar_btn', function() {
+          req = 'deleteScholar';
+          $('#confirm_label').html('Warning');
+          $('#confirm_modal .modal-body').html('Confirm deletion of this application form? This cannot be revised');
+     });
+     $('main').on('click', '#finalConfirm_btn', function() {
+          let formID = $('#application_id').val();
+          
+          $.ajax({
+               type: "POST",
+               url: "ajax/ajax_adminAppControls.php",
+               data: {id: formID, req: req},
+               cache: "false",
+               dataType: "json",
+               success: function(response) {
+                    if(response.type == 'success') {
+                         $('.success').addClass('d-block');
+                         $('.success .toast-body').html(response.msg);
+
+                         loadTableInterface('applicationView.php', '#application_table', [3, 4]);
+                         
+                         setInterval(()=>{
+                              $('.success').fadeOut(1000);
+                              setInterval(()=>{
+                                   $('.success').removeClass('d-block');
+                              },950);
+                         },5000);
+                    } else if(response.type == 'error') {
+                         $('.alert').addClass('d-block');
+                         $('.alert .toast-body').html(response.msg);
+                         
+                         setInterval(()=>{
+                              $('.alert').fadeOut(1000);
+                              setInterval(()=>{
+                                   $('.alert').removeClass('d-block');
+                              },950);
+                         },5000);
+                    }
+               }
+          });
+     });
+     // end ===========================
+
      $('main').on('click', '#appliBack_btn', function() {
           loadTableInterface('applicationView.php', '#application_table', [3, 4]);
-     });
-     $('main').on('click', '#reject_btn', function() {
-          $('main .reject-container').toggleClass('d-none', 'd-flex');
-          $('main .approve-container').removeClass('d-flex').addClass('d-none');
      });
      $('main').on('click', '#appliCancel', function() {
           $('main .approve-container').removeClass('d-flex').addClass('d-none');

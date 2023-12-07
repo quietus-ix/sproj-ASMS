@@ -1,6 +1,5 @@
 <?php
      $id = $_POST['id'];
-     $note = $_POST['note'];
      $req = $_POST['req'];
      $status;
 
@@ -9,6 +8,7 @@
      if($req==="approve") {
           $status = 'approved';
           $sched = $_POST['sched'];
+          $note = $_POST['note'];
           $query = $conn->prepare(
                "UPDATE tbl_scholar_application
                SET scholar_status = ?,
@@ -32,6 +32,7 @@
           }
      } else if($req==="reject") {
           $status = 'rejected';
+          $note = $_POST['note'];
           $query = $conn->prepare(
                "UPDATE tbl_scholar_application
                SET scholar_status = ?,
@@ -45,6 +46,27 @@
                echo json_encode(array(
                     "type"    =>"success",
                     "msg"     =>"Scholarship application form has been rejected"
+               ));
+          } else {
+               echo json_encode(array(
+                    "type"    =>"error",
+                    "msg"     =>"Error"
+               ));
+          }
+     } else if($req==="confirmScholar") {
+          $status = 'verified';
+          $query = $conn->prepare(
+               "UPDATE tbl_scholar_application
+               SET scholar_status = ?
+               WHERE scholar_id = '$id'"
+          );
+          $query->bind_param('s', $status);
+          $query->execute();
+
+          if($query) {
+               echo json_encode(array(
+                    "type"    =>"success",
+                    "msg"     =>"Scholarship successfully applied to the applicant"
                ));
           } else {
                echo json_encode(array(

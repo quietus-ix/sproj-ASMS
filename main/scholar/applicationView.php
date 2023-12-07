@@ -16,9 +16,9 @@
 <?php
      if($query->num_rows > 0) {
 ?>
-<div class="p-3 d-flex flex-column w-100 h-100" style="overflow-y: scroll;">
+<div class="p-3 d-flex flex-column w-100 h-100 gap-3" style="overflow-y: scroll;">
      <!-- banner -->
-     <div class="application-banner w-100 shadow rounded p-3 d-flex justify-content-between mb-3">
+     <div class="application-banner w-100 shadow rounded p-3 d-flex justify-content-between">
           <div class="d-flex flex-column">
                <h5 class="text-dark mb-4">
                     Your assistance application is  
@@ -90,7 +90,7 @@
                </svg>
                Your Application Details
           </h5>
-          <div class="card-body" style="overflow-y: scroll; overflow-x: hidden; height: 58vh;">
+          <div class="card-body" style="overflow-y: scroll; overflow-x: hidden; height: 55vh;">
                <h5 class="card-title fw-bold"></h5>
                <div class="card-text">
                     <div class="row d-flex align-items-center flex-nowrap justify-content-between gap-3 mb-2 pe-3">

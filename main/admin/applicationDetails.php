@@ -308,11 +308,59 @@
      <div class="d-flex flex-column gap-4 w-25">
           <input type="hidden" id="application_id" value="<?php echo $id ?>">
           <div class="d-flex flex-column gap-2">
-               <button type="button" id="approve_btn" class="btn btn-success">
+			<button 
+				type="button" 
+				id="confirmScholar_btn" 
+				class="btn btn-primary
+				<?php
+					if($row['scholar_status'] === 'approved') {
+						echo 'd-block';
+					} else {
+						echo 'd-none';
+					}
+				?>"
+				data-bs-toggle="modal" 
+				data-bs-target="#confirm_modal">
+				Confirm Scholar
+			</button>
+
+			<button 
+				type="button" 
+				id="deleteScholar_btn" 
+				class="btn btn-danger
+				<?php
+					if($row['scholar_status'] === 'approved' || $row['scholar_status'] === 'rejected') {
+						echo 'd-block';
+					} else {
+						echo 'd-none';
+					}
+				?>"
+				data-bs-toggle="modal" 
+				data-bs-target="#confirm_modal">
+				Delete Form
+			</button>
+
+               <button 
+                    type="button" 
+                    id="approve_btn" 
+                    class="btn btn-success"
+                    <?php
+                         if($row['scholar_status'] === 'approved' || $row['scholar_status'] === 'rejected') {
+                              echo 'disabled';
+                         }
+                    ?>>
                     Approve
                </button>
      
-               <button type="button" id="reject_btn" class="btn btn-danger">
+               <button 
+                    type="button" 
+                    id="reject_btn" 
+                    class="btn btn-danger"
+                    <?php
+                         if($row['scholar_status'] === 'approved' || $row['scholar_status'] === 'rejected') {
+                              echo 'disabled';
+                         }
+                    ?>>
                     Reject
                </button>
      
@@ -320,9 +368,7 @@
                     Back
                </button>
           </div>
-<!-- TODO:
-          - make this shit do ajax
--->
+
           <div class="approve-container d-none flex-column border border-2 rounded p-1">
                <div class="form-floating mb-2">
                     <input type="datetime-local" class="form-control" id="schedule" placeholder="Schedule">
@@ -349,4 +395,23 @@
                </div>
           </div>
      </div>
+</div>
+
+<!-- modal -->
+<div class="modal fade" id="confirm_modal" tabindex="-1" aria-labelledby="confirm_label" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="confirm_label">...</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+			...
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+				<button type="button" id="finalConfirm_btn" class="btn btn-primary" data-bs-dismiss="modal">Yes</button>
+			</div>
+		</div>
+	</div>
 </div>

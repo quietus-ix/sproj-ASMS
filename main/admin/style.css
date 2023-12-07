@@ -13,6 +13,21 @@
      animation: slideRight 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6) 0s 1 normal forwards;
 }
 
+/* text colors */
+.pending {
+     
+     color: #5ea4ff !important;
+}
+.approved {
+     color: #00ff22 !important;
+}
+.rejected {
+     color: #ff5e5e !important;
+}
+.modified {
+     color: #ffd000 !important;
+}
+
 *{
      margin: 0;
      padding: 0;

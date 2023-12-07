@@ -84,7 +84,7 @@
                     </h5>
                     <p class="card-text fw-bold fs-4">
                          <?php
-                              $query = $conn->query("SELECT COUNT(scholar_status) FROM tbl_scholar_application WHERE scholar_status = 'scholar'");
+                              $query = $conn->query("SELECT COUNT(scholar_status) FROM tbl_scholar_application WHERE scholar_status = 'verified'");
                               $count = $query->fetch_column();
 
                               if($count > 0) {
