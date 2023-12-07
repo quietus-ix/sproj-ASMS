@@ -20,25 +20,60 @@
                          - opens a modal to send a note about the reason why the form is rejected
                     - concluded (?) i dunno the term
 -->
-
+<?php
+     require_once '../php/config.php';
+?>
+<?php
+     include("applicationModals.php");
+?>
 <div class="d-flex flex-column p-3">
 
      <table class="table" id="application_table">
           <thead>
+
                <tr>
-                    <td></td>
+                    <td>Application ID</td>
+                    <td>Application Recepient</td>
+                    <td>Application Status</td>
+                    <td>Action</td>
                </tr>
           </thead>
           <tbody>
-               <tr>
-                    <td></td>
-               </tr>
+               <?php
+                    $sql = "SELECT * FROM tbl_scholar_application INNER JOIN  tbl_user ON tbl_scholar_application.scholar_reqBy = tbl_user.user_id";
+                    $result = $conn->query($sql);
+                    if($result->num_rows > 0){
+                         while($row = $result->fetch_assoc()){   
+               ?>
+                    <tr>
+                         <td><?php echo $row['scholar_id'] ?></td>
+                         <td><?php echo $row['user_fullname'] ?></td>
+                         <td><?php echo $row['scholar_civStatus'] ?></td>
+                         <td>
+                              <div class="dropdown">
+                                   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                   Select
+                                   </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                             <li>
+                                                  <button type="button" class="btn btn-primary dropdown-item" data-bs-toggle="modal" data-bs-target="#approveModal">
+                                                  Approve
+                                                  </button>
+                                             </li>
+                                             <li>
+                                                  <button type="button" class="btn btn-primary dropdown-item" data-bs-toggle="modal" data-bs-target="#rejectModal">
+                                                  Reject
+                                                  </button>
+                                             </li>
+                                        </ul>
+                              </div>
+                         </td>
+                    </tr>
+               <?php 
+                    }
+                    }
+               ?>
           </tbody>
-          <tfoot>
-               <tr>
-                    <td></td>
-               </tr>
-          </tfoot>
      </table>
 
 </div>

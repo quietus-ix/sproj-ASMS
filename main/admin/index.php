@@ -4,17 +4,6 @@
 
 	$sessionID = $_SESSION['sessionID'];
 	
-	if(!isset($sessionID)) {
-		header('Location: ../login/index.php');
-	} else {
-		$authquery = $conn->query("SELECT user_type FROM tbl_user WHERE user_id = '$sessionID'");
-		$auth = $authquery->fetch_column();
-
-		if($auth!='1') {
-			header('Location: ../login/index.php');
-		}
-	}
-	
 	$query = $conn->query("SELECT user_fullname FROM tbl_user WHERE user_id = '$sessionID'");
 	$user = $query->fetch_column();
 ?>
