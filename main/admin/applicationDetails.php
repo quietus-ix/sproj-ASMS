@@ -330,7 +330,7 @@
                </div>
                <div class="form-floating">
                     <textarea class="form-control" placeholder="Additional note here" id="note" style="height: 15rem"></textarea>
-                    <label for="floatingTextarea2">Additional Note</label>
+                    <label for="note">Additional Note</label>
                </div>
                <div class="d-flex gap-2 w-100 mt-3">
                     <button type="button" class="btn btn-primary w-75" id="approve_confirm">Confirm</button>
@@ -340,7 +340,7 @@
 
           <div class="reject-container d-none flex-column gap-2 border border-2 rounded p-1">
                <div class="form-floating">
-                    <textarea class="form-control" placeholder="Reason for rejection" id="note" style="height: 15rem"></textarea>
+                    <textarea class="form-control" placeholder="Reason for rejection" id="reject_note" style="height: 15rem"></textarea>
                     <label for="floatingTextarea2">Reason</label>
                </div>
                <div class="d-flex gap-2 w-100 mt-3">

@@ -89,6 +89,94 @@ $(document).ready(function(){
           $('main .approve-container').toggleClass('d-none', 'd-flex');
           $('main .reject-container').removeClass('d-flex').addClass('d-none');
      });
+          $('main').on('click', '#approve_confirm', function() {
+               let formID          = $('#application_id').val();
+               let schedDateTime   = $('#schedule').val();
+               let formNote        = $('#note').val();
+
+               $.ajax({
+                    type: "POST",
+                    url: "ajax/ajax_adminAppControls.php",
+                    data: {
+                         id: formID,
+                         sched: schedDateTime,
+                         note: formNote,
+                         req: "approve"
+                    },
+                    cache: "false",
+                    dataType: "json",
+                    success: function(response) {
+                         if(response.type == 'success') {
+                              $('.success').addClass('d-block');
+                              $('.success .toast-body').html(response.msg);
+
+                              loadTableInterface('applicationView.php', '#application_table', [3, 4]);
+                              
+                              setInterval(()=>{
+                                   $('.success').fadeOut(1000);
+                                   setInterval(()=>{
+                                        $('.success').removeClass('d-block');
+                                   },950);
+                              },5000);
+                         } else if(response.type == 'error') {
+                              $('.alert').addClass('d-block');
+                              $('.alert .toast-body').html(response.msg);
+                              
+                              setInterval(()=>{
+                                   $('.alert').fadeOut(1000);
+                                   setInterval(()=>{
+                                        $('.alert').removeClass('d-block');
+                                   },950);
+                              },5000);
+                         }
+                    }
+               });
+          });
+          $('main').on('click', '#reject_confirm', function() {
+               let formID          = $('#application_id').val();
+               let formNote        = $('#reject_note').val();
+
+               $.ajax({
+                    type: "POST",
+                    url: "ajax/ajax_adminAppControls.php",
+                    data: {
+                         id: formID,
+                         note: formNote,
+                         req: "reject"
+                    },
+                    cache: "false",
+                    dataType: "json",
+                    success: function(response) {
+                         if(response.type == 'success') {
+                              $('.success').addClass('d-block');
+                              $('.success .toast-body').html(response.msg);
+
+                              loadTableInterface('applicationView.php', '#application_table', [3, 4]);
+                              
+                              setInterval(()=>{
+                                   $('.success').fadeOut(1000);
+                                   setInterval(()=>{
+                                        $('.success').removeClass('d-block');
+                                   },950);
+                              },5000);
+                         } else if(response.type == 'error') {
+                              $('.alert').addClass('d-block');
+                              $('.alert .toast-body').html(response.msg);
+                              
+                              setInterval(()=>{
+                                   $('.alert').fadeOut(1000);
+                                   setInterval(()=>{
+                                        $('.alert').removeClass('d-block');
+                                   },950);
+                              },5000);
+                         }
+                    }
+               });
+          });
+
+     $('main').on('click', '#appliBack_btn', function() {
+          loadTableInterface('applicationView.php', '#application_table', [3, 4]);
+     });
      $('main').on('click', '#reject_btn', function() {
           $('main .reject-container').toggleClass('d-none', 'd-flex');
           $('main .approve-container').removeClass('d-flex').addClass('d-none');

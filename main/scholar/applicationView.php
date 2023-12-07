@@ -21,58 +21,60 @@
      <div class="application-banner w-100 shadow rounded p-3 d-flex justify-content-between mb-3">
           <div class="d-flex flex-column">
                <h5 class="text-dark mb-4">
-                    Your assistance application is currently 
+                    Your assistance application is  
                     <?php
                          $status = $row['scholar_status'];
      
                          if($status == 'pending') {
-                              echo '<span class="fw-bold pending"> pending</span>';
+                              echo 'currently<span class="fw-bold pending"> pending</span>';
                          }
                          else if($status == 'approved') {
-                              echo '<span class="fw-bold approved"> pending</span>';
+                              echo 'now <span class="fw-bold approved"> approved</span>';
                          }
                          else if($status == 'rejected') {
-                              echo '<span class="fw-bold rejected"> pending</span>';
+                              echo 'unfortunately <span class="fw-bold rejected"> rejected</span>';
                          }
                          else if($status == 'modified') {
-                              echo '<span class="fw-bold modified"> pending</span>';
+                              echo 'now <span class="fw-bold modified"> modified</span>';
                          }
                     ?>
                </h5>
      
                <p class="text-dark">Your scholarship application will be reviewed by the administrator. Once approved, the admin will send you the schedule of your appointment for interview.</p>
-               <button 
-                    type="button" 
-                    class="btn btn-success w-50" 
-                    data-bs-toggle="modal" 
-                    data-bs-target="#appointment"
-                    <?php
-                         if(empty($row['scholar_schedule'])) {
-                              echo 'style="display: none;"';
-                         }
-                         else {
-                              echo 'style="display: block;"';
-                         }
-                    ?>
-               >
-                    View your appointment schedule
-               </button>
-               <button 
-                    type="button" 
-                    class="btn btn-primary w-50" 
-                    data-bs-toggle="modal" 
-                    data-bs-target="#note"
-                    <?php
-                         if(empty($row['scholar_note'])) {
-                              echo 'style="display: none;"';
-                         }
-                         else {
-                              echo 'style="display: block;"';
-                         }
-                    ?>
-               >
-                    View your appointment schedule
-               </button>
+               <div class="d-flex w-50">
+                    <button 
+                         type="button" 
+                         class="btn btn-success w-50" 
+                         data-bs-toggle="modal" 
+                         data-bs-target="#appointment"
+                         <?php
+                              if(isset($row['scholar_schedule']) && $row['scholar_status']==='approved') {
+                                   echo 'style="display: block;"';
+                              }
+                              else {
+                                   echo 'style="display: none;"';
+                              }
+                         ?>
+                    >
+                         View your appointment schedule
+                    </button>
+                    <button 
+                         type="button" 
+                         class="btn btn-warning w-50 text-light" 
+                         data-bs-toggle="modal" 
+                         data-bs-target="#note"
+                         <?php
+                              if(isset($row['scholar_note']) && $row['scholar_status']==='rejected') {
+                                   echo 'style="display: block;"';
+                              }
+                              else {
+                                   echo 'style="display: none;"';
+                              }
+                         ?>
+                    >
+                         Comment from the admin
+                    </button>
+               </div>
           </div>
 
           <div class="application-banner-illustration d-flex justify-content-center-align-items-center">
@@ -398,7 +400,7 @@
       </div>
       <div class="modal-body">
           <div class="form-floating">
-               <textarea class="form-control" placeholder="Leave a comment here" id="schedule_input" readonly></textarea>
+               <textarea class="form-control" placeholder="Leave a comment here" id="schedule_input" disabled><?php if(isset($row['scholar_note'])) { echo $row['scholar_note']; } else { echo 'null'; } ?></textarea>
                <label for="schedule_input">Note</label>
           </div>
       </div>

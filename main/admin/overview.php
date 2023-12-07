@@ -84,7 +84,7 @@
                     </h5>
                     <p class="card-text fw-bold fs-4">
                          <?php
-                              $query = $conn->query("SELECT COUNT(scholar_status) FROM tbl_scholar_application WHERE scholar_status = 'approved'");
+                              $query = $conn->query("SELECT COUNT(scholar_status) FROM tbl_scholar_application WHERE scholar_status = 'scholar'");
                               $count = $query->fetch_column();
 
                               if($count > 0) {
@@ -102,7 +102,18 @@
                          Awaiting Review
                          <i class='bx bxs-briefcase-alt-2 fs-2'></i>
                     </h5>
-                    <p class="card-text fw-bold fs-4">0</p>
+                    <p class="card-text fw-bold fs-4">
+                         <?php
+                              $query = $conn->query("SELECT COUNT(scholar_status) FROM tbl_scholar_application WHERE scholar_status = 'approved'");
+                              $count = $query->fetch_column();
+
+                              if($count > 0) {
+                                   echo $count;
+                              } else {
+                                   echo 0;
+                              }
+                         ?>
+                    </p>
                </div>
           </div>
           <div class="card shadow-sm w-25 h-75">
