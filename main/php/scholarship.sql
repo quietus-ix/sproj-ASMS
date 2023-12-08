@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 04, 2023 at 05:55 PM
+-- Generation Time: Dec 08, 2023 at 04:55 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -100,11 +100,9 @@ INSERT INTO `tbl_course` (`course_id`, `course_name`, `course_yearlevel`) VALUES
 
 CREATE TABLE `tbl_notification` (
   `notif_id` int(11) NOT NULL,
-  `scholar_application_id` int(11) NOT NULL,
-  `notif_name` varchar(50) NOT NULL,
-  `notif_from` varchar(50) NOT NULL,
-  `notif_to` varchar(50) NOT NULL,
-  `notif_desc` varchar(100) NOT NULL,
+  `notif_type` int(11) NOT NULL,
+  `notif_ref` int(11) NOT NULL,
+  `notif_new` tinyint(1) NOT NULL,
   `notif_time` time NOT NULL,
   `notif_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -113,11 +111,10 @@ CREATE TABLE `tbl_notification` (
 -- Dumping data for table `tbl_notification`
 --
 
-INSERT INTO `tbl_notification` (`notif_id`, `scholar_application_id`, `notif_name`, `notif_from`, `notif_to`, `notif_desc`, `notif_time`, `notif_date`) VALUES
-(1, 0, 'Program', 'admin', 'scholars', 'please go on time', '10:30:00', '2023-12-20'),
-(3, 0, 'fgfg', 'gdg', 'ffh', 'hfg', '14:34:00', '2023-12-31'),
-(4, 0, 'fdfd', 'fdfd', 'dfd', 'dgdg', '23:03:00', '2323-12-12'),
-(5, 0, 'fdfddd', 'fdfd', 'dfd', 'dgdg', '23:03:00', '2323-12-12');
+INSERT INTO `tbl_notification` (`notif_id`, `notif_type`, `notif_ref`, `notif_new`, `notif_time`, `notif_date`) VALUES
+(1, 1, 2, 0, '19:13:53', '2023-12-08'),
+(2, 2, 86, 0, '19:13:53', '2023-12-08'),
+(3, 1, 88, 1, '16:36:00', '2023-12-08');
 
 -- --------------------------------------------------------
 
@@ -127,19 +124,8 @@ INSERT INTO `tbl_notification` (`notif_id`, `scholar_application_id`, `notif_nam
 
 CREATE TABLE `tbl_schedule` (
   `sched_id` int(11) NOT NULL,
-  `sched_time` varchar(32) NOT NULL,
-  `sched_date` date NOT NULL
+  `sched_time` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tbl_schedule`
---
-
-INSERT INTO `tbl_schedule` (`sched_id`, `sched_time`, `sched_date`) VALUES
-(1, 'Assistance', '0000-00-00'),
-(3, 'fg', '0000-00-00'),
-(4, 'hdh', '0000-00-00'),
-(5, 'mine', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -165,8 +151,9 @@ CREATE TABLE `tbl_scholar_application` (
   `scholar_email` varchar(64) NOT NULL,
   `scholar_num` varchar(15) NOT NULL,
   `scholar_status` varchar(11) NOT NULL,
+  `scholar_dateOfReq` date NOT NULL,
   `scholar_reqBy` int(11) NOT NULL,
-  `scholar_schedule` int(11) DEFAULT NULL,
+  `scholar_schedule` datetime DEFAULT NULL,
   `scholar_note` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -174,8 +161,10 @@ CREATE TABLE `tbl_scholar_application` (
 -- Dumping data for table `tbl_scholar_application`
 --
 
-INSERT INTO `tbl_scholar_application` (`scholar_id`, `scholar_course`, `scholar_family`, `scholar_ln`, `scholar_fn`, `scholar_mn`, `scholar_ext`, `scholar_brgy`, `scholar_muni`, `scholar_civStatus`, `scholar_citizenship`, `scholar_dob`, `scholar_age`, `scholar_gender`, `scholar_email`, `scholar_num`, `scholar_status`, `scholar_reqBy`, `scholar_schedule`, `scholar_note`) VALUES
-(82, 3, 19, 'Malba', 'Mary Angel', 'Maque', '', 'Brgy. Bigo', 'Kabankalan', 'married', 'Filipino', '2002-10-06', '21', 'female', 'awd@a', 'aa', 'pending', 22, NULL, NULL);
+INSERT INTO `tbl_scholar_application` (`scholar_id`, `scholar_course`, `scholar_family`, `scholar_ln`, `scholar_fn`, `scholar_mn`, `scholar_ext`, `scholar_brgy`, `scholar_muni`, `scholar_civStatus`, `scholar_citizenship`, `scholar_dob`, `scholar_age`, `scholar_gender`, `scholar_email`, `scholar_num`, `scholar_status`, `scholar_dateOfReq`, `scholar_reqBy`, `scholar_schedule`, `scholar_note`) VALUES
+(2, 3, 21, 'Malba', 'Mary Angel', 'Maque', '', 'Brgy. Bigo', 'Kabankalan', 'single', 'Filipino', '2016-11-06', '4', 'female', 'awd@a', 'aa', 'rejected', '2023-11-01', 22, '2023-12-04 03:02:00', 'aaa'),
+(86, 3, 23, 'aa', 'aa', 'aaa', '', 'aaa', 'aa', 'single', 'aaa', '2023-12-12', '2', 'male', 'awd@w', '22', 'verified', '2023-12-07', 24, '2023-12-12 03:00:00', 'gago ka'),
+(88, 1, 25, 'www', 'ww', 'ww', '', 'ww', 'ww', 'single', 'ww', '2023-12-07', '2', 'male', 'ww@w', 'ww', 'pending', '2023-12-08', 23, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -206,10 +195,12 @@ CREATE TABLE `tbl_scholar_family` (
 --
 
 INSERT INTO `tbl_scholar_family` (`sfam_id`, `sfam_f_name`, `sfam_f_age`, `sfam_f_address`, `sfam_f_occupation`, `sfam_f_eduAttainment`, `sfam_f_mobileNum`, `sfam_m_name`, `sfam_m_age`, `sfam_m_address`, `sfam_m_occupation`, `sfam_m_eduAttainment`, `sfam_m_mobileNum`, `sfam_totalSalary`, `sfam_numSiblings`) VALUES
-(16, 'aa', '2', 'aa', 'aa', 'elementary', 'aa', 'aa', '2', 'aa', 'aa', 'elementary', 'aa', 'below P10 000', '2'),
-(17, 'ww', '3', 'ww', 'ww', 'college', '22', 'ww', '3', 'ww', 'ww', 'high school', '22', 'P11 000 - P30 000', '2'),
-(18, 'bb', '2', 'awd', 'aa', 'high school', '3213', 'aa', '3', 'awd', 'aa', 'college', '123', 'P11 000 - P30 000', '2'),
-(19, 'awd', '2', 'awd', 'awd', 'high school', 'awd', 'awd', '2', 'awd', 'awd', 'college', 'awd', 'P11 000 - P30 000', '2');
+(20, 'wad', '3', 'awdaw', 'eee', 'elementary', '22', 'awd', '3', 'awd', 'aa', 'college', 'awd', 'P11 000 - P30 000', '3'),
+(21, 'wad', '1', 'awdaw', 'w', 'high school', '3213', 'awd', '2', 'awd', 'w', 'college', 'awd', 'P11 000 - P30 000', '3'),
+(22, 'awddd', '2', 'aaa', 'a', 'college', '222', 'awd', '2', 'aaa', 'a', 'college', '222', 'P11 000 - P30 000', '3'),
+(23, 'a', '2', 'a', '2aa', 'elementary', '22', 'a', '2', 'a', 'a', 'elementary', '22', 'above P50 000', '3'),
+(24, 'ww', '2', 'ww', 'ww', 'elementary', 'ww', 'ww', '2', 'ww', 'ww', 'elementary', 'ww', 'P11 000 - P30 000', '3'),
+(25, 'ww', '2', 'ww', 'ww', 'elementary', 'ww', 'ww', '2', 'ww', 'ww', 'elementary', 'ww', 'P11 000 - P30 000', '22');
 
 -- --------------------------------------------------------
 
@@ -234,7 +225,8 @@ CREATE TABLE `tbl_user` (
 INSERT INTO `tbl_user` (`user_id`, `user_type`, `user_fullname`, `user_username`, `user_email`, `user_password`, `user_creationDate`) VALUES
 (1, '1', 'Admin', 'admin', '', '$2y$10$jgUzMr.EaMCPxXmX7OvTzOGWL548wCxLgCg69mtn8HGgSraxNwtU2', '2023-12-04'),
 (22, '2', 'Maria Juana', 'user', 'user@user.com', '$2y$10$jgUzMr.EaMCPxXmX7OvTzOGWL548wCxLgCg69mtn8HGgSraxNwtU2', '2023-12-03'),
-(23, '2', 'Totoy Bibo', 'user2', 'user2@user.com', '$2y$10$V0OXDPiumK1EWX0Gi8GxCOHJi.pYd1DX2tVt0kEfk0NtF4hIVmiOm', '2023-12-04');
+(23, '2', 'Totoy Bibo', 'user2', 'user2@user.com', '$2y$10$V0OXDPiumK1EWX0Gi8GxCOHJi.pYd1DX2tVt0kEfk0NtF4hIVmiOm', '2023-12-04'),
+(24, '2', 'Aeron Gab', 'aeron', 'a@aa', '$2y$10$dfb8tVZzRSCPkp1nHhXRIeLlSxanAD29afaafnT4QT/0Usq6w/cam', '2023-12-07');
 
 -- --------------------------------------------------------
 
@@ -281,8 +273,7 @@ ALTER TABLE `tbl_course`
 -- Indexes for table `tbl_notification`
 --
 ALTER TABLE `tbl_notification`
-  ADD PRIMARY KEY (`notif_id`),
-  ADD KEY `scholar_application_id_fk` (`scholar_application_id`);
+  ADD PRIMARY KEY (`notif_id`);
 
 --
 -- Indexes for table `tbl_schedule`
@@ -297,7 +288,6 @@ ALTER TABLE `tbl_scholar_application`
   ADD PRIMARY KEY (`scholar_id`),
   ADD KEY `fk_scholar_fam` (`scholar_family`),
   ADD KEY `fk_scholar_course` (`scholar_course`),
-  ADD KEY `fk_scholar_schedule` (`scholar_schedule`),
   ADD KEY `fk_scholar_formOwner` (`scholar_reqBy`);
 
 --
@@ -338,7 +328,7 @@ ALTER TABLE `tbl_course`
 -- AUTO_INCREMENT for table `tbl_notification`
 --
 ALTER TABLE `tbl_notification`
-  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_schedule`
@@ -350,19 +340,19 @@ ALTER TABLE `tbl_schedule`
 -- AUTO_INCREMENT for table `tbl_scholar_application`
 --
 ALTER TABLE `tbl_scholar_application`
-  MODIFY `scholar_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `scholar_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `tbl_scholar_family`
 --
 ALTER TABLE `tbl_scholar_family`
-  MODIFY `sfam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `sfam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `user_type`
@@ -380,8 +370,7 @@ ALTER TABLE `user_type`
 ALTER TABLE `tbl_scholar_application`
   ADD CONSTRAINT `fk_scholar_course` FOREIGN KEY (`scholar_course`) REFERENCES `tbl_course` (`course_id`),
   ADD CONSTRAINT `fk_scholar_fam` FOREIGN KEY (`scholar_family`) REFERENCES `tbl_scholar_family` (`sfam_id`),
-  ADD CONSTRAINT `fk_scholar_formOwner` FOREIGN KEY (`scholar_reqBy`) REFERENCES `tbl_user` (`user_id`),
-  ADD CONSTRAINT `fk_scholar_schedule` FOREIGN KEY (`scholar_schedule`) REFERENCES `tbl_schedule` (`sched_id`) ON DELETE SET NULL ON UPDATE SET NULL;
+  ADD CONSTRAINT `fk_scholar_formOwner` FOREIGN KEY (`scholar_reqBy`) REFERENCES `tbl_user` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
