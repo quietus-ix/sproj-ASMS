@@ -17,6 +17,8 @@
 	
 	$query = $conn->query("SELECT user_fullname FROM tbl_user WHERE user_id = '$sessionID'");
 	$user = $query->fetch_column();
+
+	$checkNewNotif = $conn->query("SELECT notif_new FROM tbl_notification WHERE notif_new = true");
 ?>
 
 <!DOCTYPE html>
@@ -25,10 +27,10 @@
 		<meta charset="UTF-8">
 		<title> Responsiive Schola Dashboard | CodingLab </title>
 		<!-- Boxicons CDN Link -->
-		<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="../../src/extensions/bootstrap.css">
 		<link rel="stylesheet" href="../../src/extensions/datatables/datatables.css">
+		<link rel="stylesheet" href="../../src/extensions/icons/bootstrap-icons.css">
 		<link rel="stylesheet" href="style.css">
 
 		<script src="../../src/extensions/echarts.min.js"></script>
@@ -49,38 +51,26 @@
 				<div class="nav-links d-flex flex-column pe-0 position-relative z-1">
 					<div class="" id="overview_tab">
 						<a href="#" class="active">
-							<i class='bx bx-grid-alt' ></i>
+							<i class="bi bi-file-bar-graph-fill"></i>
 							<span class="links_name">Overview</span>
 						</a>
 					</div>
 					<div class="" id="applicationView_tab">
 						<a href="#">
-							<i class='bx bx-user'></i>
+							<i class="bi bi-clipboard2-fill"></i>
 							<span class="links_name">Application List</span>
 						</a>
 					</div>
 					<div class="" id="scholars_tab">
 						<a href="#">
-							<i class='bx bx-user'></i>
+							<i class="bi bi-person-badge-fill"></i>
 							<span class="links_name">Scholars</span>
 						</a>
 					</div>
 					<div class="" id="viewCourse_tab">
 						<a href="#">
-							<i class='bx bxs-graduation' ></i>
-							<span class="links_name">Schedules</span>
-						</a>
-					</div>
-					<div class="">
-						<a href="#">
-							<i class='bx bxs-file-blank' ></i>
+							<i class="bi bi-mortarboard-fill"></i>
 							<span class="links_name">Courses</span>
-						</a>
-					</div>
-					<div class="">
-						<a href="#">
-							<i class='bx bxs-bell-ring' ></i>
-							<span class="links_name">Placeholder</span>
 						</a>
 					</div>
 				</div>
@@ -89,13 +79,37 @@
 			<div class="content d-flex flex-column px-0 mx-0">
 				<!-- the nav bar above -->
 				<div class="nav-top shadow-sm d-flex align-items-center px-3 py-2">
-					<div class="col-10 align-items-center d-flex">
+					<div class="col-8 align-items-center d-flex">
 						<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-clipboard-data-fill me-2 nav-heading-icon" viewBox="0 0 16 16">
 							<path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/>
 							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5zM10 8a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm4-3a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1"/>
 						</svg>
 						<h4 id="nav-heading" class="nav-heading m-0">Admin Dashboard</h4>
 					</div>
+
+					<!-- notification button -->
+					<div class="col-2 d-flex align-items-center justify-content-end">
+						<button type="button" id="notif_btn" class="btn btn-outline-dark p-2 position-relative d-flex align-items-center border border-2 rounded">
+							<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-bell-fill me-2" viewBox="0 0 16 16">
+								<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+							</svg>
+							Notification
+							<span
+								id="notif_badge"
+								class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle
+								<?php
+									
+									if($checkNewNotif->num_rows > 0) {
+										echo 'd-block';
+									} else {
+										echo 'd-none';
+									}
+								?>">
+								<span class="visually-hidden">New alerts</span>
+							</span>
+						</button>
+					</div>
+
 					<div class="col-2 d-flex justify-content-end">
 						<div class="dropdown">
 							<button class="btn d-flex align-items-center gap-2 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

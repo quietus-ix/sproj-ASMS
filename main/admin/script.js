@@ -67,6 +67,17 @@ $(document).ready(function(){
      });
      // end =========================
 
+     /*
+          top navbar action events
+     */
+    $('#notif_btn').on('click', ()=>{
+          let hasclass = $('#notif_badge').hasClass('d-block');
+          if(hasclass) {
+               $('#notif_badge').removeClass('d-block').addClass('d-none');
+          }
+          loadInterface('notifView.php');
+     });
+
 
     /*
           application table actions
@@ -238,4 +249,27 @@ $(document).ready(function(){
           $('main .approve-container').removeClass('d-flex').addClass('d-none');
           $('main .reject-container').removeClass('d-flex').addClass('d-none');
      });
+
+
+     /* 
+          notification actions
+     */
+     $('main').on('click', '#notif_pane', function() {
+          let ref_id     = $(this).attr('data-ref');
+          let badge_id   = $(this).attr('data-id');
+          
+          $.ajax({
+               type: "POST",
+               url: "applicationDetails.php",
+               data: {
+                    id: ref_id,
+                    badge: badge_id
+               },
+               cache: "false",
+               success: function(response) {
+                    $('main').html(response);
+               }
+          });
+     });
+     
 });

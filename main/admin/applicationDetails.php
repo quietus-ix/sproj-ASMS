@@ -13,6 +13,14 @@
      $row = $query->fetch_assoc();
 
      $qsched = $conn->query("SELECT * FROM tbl_schedule");
+
+     if(isset($_POST['badge'])) {
+          $badge = $_POST['badge'];
+
+          $updateBadge = $conn->prepare("UPDATE tbl_notification SET notif_new = 0 WHERE notif_id = ?");
+          $updateBadge->bind_param('i', $badge);
+          $updateBadge->execute();
+     }
 ?>
 
 <div class="d-flex p-3 gap-3">

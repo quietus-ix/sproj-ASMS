@@ -124,10 +124,32 @@
                          $query->execute();
      
                          if($query) {
-                              echo json_encode(array(
-                                   "type"    =>"success",
-                                   "msg"     =>"Application successfully submitted! You may view your application details in Application tab"
-                              ));
+                              $notif_type = 1;
+                              $notif_ref = $query->insert_id;
+                              $notif_new = true;
+                              $notif_time = date('H:i:S');
+                              $notif_date = $currentDate;
+
+                              $query = $conn->prepare(
+                                   "INSERT INTO tbl_notification(
+                                        notif_type,
+                                        notif_ref,
+                                        notif_new,
+                                        notif_time,
+                                        notif_date
+                                   ) VALUES (
+                                        ?, ?, ?, ?, ?
+                                   )"
+                              );
+                              $query->bind_param("iiiss", $notif_type, $notif_ref, $notif_new, $notif_time, $notif_date);
+                              $query->execute();
+
+                              if($query) {
+                                   echo json_encode(array(
+                                        "type"    =>"success",
+                                        "msg"     =>"Application successfully submitted! You may view your application details in Application tab"
+                                   ));
+                              }
                          }
                }
                else {
