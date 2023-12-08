@@ -2,14 +2,13 @@
      require_once '../php/config.php';
 
      $today =  date('Y-m-d');
-     $ordering = date('Y-m-d H:i:s');
 
      // today
-     $query = $conn->query("SELECT * FROM tbl_notification WHERE notif_date = '$today' ORDER BY notif_id DESC");
+     $query = $conn->query("SELECT * FROM tbl_notification WHERE notif_date = CURDATE() ORDER BY notif_id DESC");
      $getNotif = $query->fetch_assoc();
 
      // past
-     $queryPast = $conn->query("SELECT * FROM tbl_notification WHERE notif_date != '$today' ORDER BY notif_id DESC");
+     $queryPast = $conn->query("SELECT * FROM tbl_notification WHERE notif_date != CURDATE() ORDER BY notif_id DESC");
      $getNotifPast = $query->fetch_assoc()
 ?>
 
@@ -51,7 +50,7 @@
           <?php 
                     }
                } else {
-                    echo '<h4 class="w-100 p-3 d-flex justify-content-center">No past notification</h4>';
+                    echo '<h4 class="w-100 p-3 d-flex justify-content-center">No current notification</h4>';
                }
           ?>
      </div>
