@@ -12,7 +12,7 @@
      );
      $row = $query->fetch_assoc();
 
-     $qsched = $conn->query("SELECT * FROM tbl_schedule");
+     // $qsched = $conn->query("SELECT * FROM tbl_schedule");
 
      if(isset($_POST['badge'])) {
           $badge = $_POST['badge'];
