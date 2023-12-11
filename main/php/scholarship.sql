@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 08, 2023 at 04:55 PM
+-- Generation Time: Dec 11, 2023 at 03:03 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -48,27 +48,6 @@ INSERT INTO `tbl_admin` (`admin_id`, `ad_lname`, `ad_fname`, `ad_email`, `ad_add
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_contact`
---
-
-CREATE TABLE `tbl_contact` (
-  `contact_id` int(11) NOT NULL,
-  `c_name` varchar(50) NOT NULL,
-  `c_emailaddress` varchar(50) NOT NULL,
-  `c_message` varchar(1000) NOT NULL,
-  `c_dateAdded` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tbl_contact`
---
-
-INSERT INTO `tbl_contact` (`contact_id`, `c_name`, `c_emailaddress`, `c_message`, `c_dateAdded`) VALUES
-(0, 'mary angel malba', 'angelmalba@gmail.com', 'i want my assistance now', '2023-11-09 11:30:06');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tbl_course`
 --
 
@@ -107,26 +86,6 @@ CREATE TABLE `tbl_notification` (
   `notif_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tbl_notification`
---
-
-INSERT INTO `tbl_notification` (`notif_id`, `notif_type`, `notif_ref`, `notif_new`, `notif_time`, `notif_date`) VALUES
-(1, 1, 2, 0, '19:13:53', '2023-12-08'),
-(2, 2, 86, 0, '19:13:53', '2023-12-08'),
-(3, 1, 88, 1, '16:36:00', '2023-12-08');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_schedule`
---
-
-CREATE TABLE `tbl_schedule` (
-  `sched_id` int(11) NOT NULL,
-  `sched_time` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 -- --------------------------------------------------------
 
 --
@@ -157,15 +116,6 @@ CREATE TABLE `tbl_scholar_application` (
   `scholar_note` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tbl_scholar_application`
---
-
-INSERT INTO `tbl_scholar_application` (`scholar_id`, `scholar_course`, `scholar_family`, `scholar_ln`, `scholar_fn`, `scholar_mn`, `scholar_ext`, `scholar_brgy`, `scholar_muni`, `scholar_civStatus`, `scholar_citizenship`, `scholar_dob`, `scholar_age`, `scholar_gender`, `scholar_email`, `scholar_num`, `scholar_status`, `scholar_dateOfReq`, `scholar_reqBy`, `scholar_schedule`, `scholar_note`) VALUES
-(2, 3, 21, 'Malba', 'Mary Angel', 'Maque', '', 'Brgy. Bigo', 'Kabankalan', 'single', 'Filipino', '2016-11-06', '4', 'female', 'awd@a', 'aa', 'rejected', '2023-11-01', 22, '2023-12-04 03:02:00', 'aaa'),
-(86, 3, 23, 'aa', 'aa', 'aaa', '', 'aaa', 'aa', 'single', 'aaa', '2023-12-12', '2', 'male', 'awd@w', '22', 'verified', '2023-12-07', 24, '2023-12-12 03:00:00', 'gago ka'),
-(88, 1, 25, 'www', 'ww', 'ww', '', 'ww', 'ww', 'single', 'ww', '2023-12-07', '2', 'male', 'ww@w', 'ww', 'pending', '2023-12-08', 23, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -190,18 +140,6 @@ CREATE TABLE `tbl_scholar_family` (
   `sfam_numSiblings` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tbl_scholar_family`
---
-
-INSERT INTO `tbl_scholar_family` (`sfam_id`, `sfam_f_name`, `sfam_f_age`, `sfam_f_address`, `sfam_f_occupation`, `sfam_f_eduAttainment`, `sfam_f_mobileNum`, `sfam_m_name`, `sfam_m_age`, `sfam_m_address`, `sfam_m_occupation`, `sfam_m_eduAttainment`, `sfam_m_mobileNum`, `sfam_totalSalary`, `sfam_numSiblings`) VALUES
-(20, 'wad', '3', 'awdaw', 'eee', 'elementary', '22', 'awd', '3', 'awd', 'aa', 'college', 'awd', 'P11 000 - P30 000', '3'),
-(21, 'wad', '1', 'awdaw', 'w', 'high school', '3213', 'awd', '2', 'awd', 'w', 'college', 'awd', 'P11 000 - P30 000', '3'),
-(22, 'awddd', '2', 'aaa', 'a', 'college', '222', 'awd', '2', 'aaa', 'a', 'college', '222', 'P11 000 - P30 000', '3'),
-(23, 'a', '2', 'a', '2aa', 'elementary', '22', 'a', '2', 'a', 'a', 'elementary', '22', 'above P50 000', '3'),
-(24, 'ww', '2', 'ww', 'ww', 'elementary', 'ww', 'ww', '2', 'ww', 'ww', 'elementary', 'ww', 'P11 000 - P30 000', '3'),
-(25, 'ww', '2', 'ww', 'ww', 'elementary', 'ww', 'ww', '2', 'ww', 'ww', 'elementary', 'ww', 'P11 000 - P30 000', '22');
-
 -- --------------------------------------------------------
 
 --
@@ -223,10 +161,7 @@ CREATE TABLE `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`user_id`, `user_type`, `user_fullname`, `user_username`, `user_email`, `user_password`, `user_creationDate`) VALUES
-(1, '1', 'Admin', 'admin', '', '$2y$10$jgUzMr.EaMCPxXmX7OvTzOGWL548wCxLgCg69mtn8HGgSraxNwtU2', '2023-12-04'),
-(22, '2', 'Maria Juana', 'user', 'user@user.com', '$2y$10$jgUzMr.EaMCPxXmX7OvTzOGWL548wCxLgCg69mtn8HGgSraxNwtU2', '2023-12-03'),
-(23, '2', 'Totoy Bibo', 'user2', 'user2@user.com', '$2y$10$V0OXDPiumK1EWX0Gi8GxCOHJi.pYd1DX2tVt0kEfk0NtF4hIVmiOm', '2023-12-04'),
-(24, '2', 'Aeron Gab', 'aeron', 'a@aa', '$2y$10$dfb8tVZzRSCPkp1nHhXRIeLlSxanAD29afaafnT4QT/0Usq6w/cam', '2023-12-07');
+(1, '1', 'Admin', 'admin', '', '$2y$10$jgUzMr.EaMCPxXmX7OvTzOGWL548wCxLgCg69mtn8HGgSraxNwtU2', '2023-12-04');
 
 -- --------------------------------------------------------
 
@@ -258,12 +193,6 @@ ALTER TABLE `tbl_admin`
   ADD PRIMARY KEY (`admin_id`);
 
 --
--- Indexes for table `tbl_contact`
---
-ALTER TABLE `tbl_contact`
-  ADD PRIMARY KEY (`contact_id`);
-
---
 -- Indexes for table `tbl_course`
 --
 ALTER TABLE `tbl_course`
@@ -274,12 +203,6 @@ ALTER TABLE `tbl_course`
 --
 ALTER TABLE `tbl_notification`
   ADD PRIMARY KEY (`notif_id`);
-
---
--- Indexes for table `tbl_schedule`
---
-ALTER TABLE `tbl_schedule`
-  ADD PRIMARY KEY (`sched_id`);
 
 --
 -- Indexes for table `tbl_scholar_application`
@@ -328,31 +251,25 @@ ALTER TABLE `tbl_course`
 -- AUTO_INCREMENT for table `tbl_notification`
 --
 ALTER TABLE `tbl_notification`
-  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `tbl_schedule`
---
-ALTER TABLE `tbl_schedule`
-  MODIFY `sched_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_scholar_application`
 --
 ALTER TABLE `tbl_scholar_application`
-  MODIFY `scholar_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `scholar_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `tbl_scholar_family`
 --
 ALTER TABLE `tbl_scholar_family`
-  MODIFY `sfam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `sfam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `user_type`
