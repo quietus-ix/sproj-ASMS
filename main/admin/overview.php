@@ -58,7 +58,7 @@ if ($query->num_rows > 0) {
                <div class="card-body d-flex flex-column">
                     <h5 class="fw-medium fs-6 d-flex align-items-center justify-content-between">
                          Applicants
-                         <i class='bx bxs-graduation fs-2'></i>
+                         <i class="bi bi-file-earmark-break-fill fs-2"></i>
                     </h5>
                     <p class="card-text fw-bold fs-4">
                          <?php
@@ -82,7 +82,7 @@ if ($query->num_rows > 0) {
                <div class="card-body d-flex flex-column">
                     <h5 class="fw-medium fs-6 d-flex align-items-center justify-content-between">
                          Scholars
-                         <i class='bx bxs-book-heart fs-2'></i>
+                         <i class="bi bi-mortarboard-fill fs-2"></i>
                     </h5>
                     <p class="card-text fw-bold fs-4">
                          <?php
@@ -102,7 +102,7 @@ if ($query->num_rows > 0) {
                <div class="card-body d-flex flex-column">
                     <h5 class="fw-medium fs-6 d-flex align-items-center justify-content-between">
                          Awaiting Review
-                         <i class='bx bxs-briefcase-alt-2 fs-2'></i>
+                         <i class="bi bi-hourglass-split fs-2"></i>
                     </h5>
                     <p class="card-text fw-bold fs-4">
                          <?php
