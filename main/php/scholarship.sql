@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 11, 2023 at 03:03 AM
+-- Generation Time: Dec 30, 2023 at 04:56 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -62,14 +62,28 @@ CREATE TABLE `tbl_course` (
 --
 
 INSERT INTO `tbl_course` (`course_id`, `course_name`, `course_yearlevel`) VALUES
-(1, 'BS in Information Technology', '1'),
-(2, 'BS in Information Technology', '2'),
-(3, 'BS in Information Technology', '3'),
-(4, 'BS in Information Technology', '4'),
-(6, 'BS in Information System', '1'),
-(7, 'BS in Information System', '2'),
-(8, 'BS in Information System', '3'),
-(9, 'BS in Information System', '4');
+(1, 'BS in Information Technologyy', '4'),
+(6, 'BS in Information Systems', '4');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_noticeinfo`
+--
+
+CREATE TABLE `tbl_noticeinfo` (
+  `id` int(11) NOT NULL,
+  `label` varchar(128) NOT NULL,
+  `content` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_noticeinfo`
+--
+
+INSERT INTO `tbl_noticeinfo` (`id`, `label`, `content`) VALUES
+(1, 'header', 'Welcome to Assistance Scholarship Management System'),
+(2, 'body-text', '<p>Before applying for our Assistance Scholarship Program, make sure that all information you provided is correct. This information will be verified once your application is approved and you were given a schedule.</p>');
 
 -- --------------------------------------------------------
 
@@ -85,6 +99,34 @@ CREATE TABLE `tbl_notification` (
   `notif_time` time NOT NULL,
   `notif_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_notification`
+--
+
+INSERT INTO `tbl_notification` (`notif_id`, `notif_type`, `notif_ref`, `notif_new`, `notif_time`, `notif_date`) VALUES
+(14, 1, 99, 0, '13:09:00', '2023-12-30'),
+(15, 1, 100, 0, '15:30:00', '2023-12-30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_reqinfo`
+--
+
+CREATE TABLE `tbl_reqinfo` (
+  `id` int(11) NOT NULL,
+  `label` varchar(128) NOT NULL,
+  `content` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_reqinfo`
+--
+
+INSERT INTO `tbl_reqinfo` (`id`, `label`, `content`) VALUES
+(1, 'req-body-text', '<p><strong>Just yourself :)</strong></p>'),
+(2, 'faq-body-text', '<p>What to do bla bla bla</p>\r\n<p>awdawdad</p>');
 
 -- --------------------------------------------------------
 
@@ -116,6 +158,13 @@ CREATE TABLE `tbl_scholar_application` (
   `scholar_note` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_scholar_application`
+--
+
+INSERT INTO `tbl_scholar_application` (`scholar_id`, `scholar_course`, `scholar_family`, `scholar_ln`, `scholar_fn`, `scholar_mn`, `scholar_ext`, `scholar_brgy`, `scholar_muni`, `scholar_civStatus`, `scholar_citizenship`, `scholar_dob`, `scholar_age`, `scholar_gender`, `scholar_email`, `scholar_num`, `scholar_status`, `scholar_dateOfReq`, `scholar_reqBy`, `scholar_schedule`, `scholar_note`) VALUES
+(100, 1, 37, 'Malba', 'Mary Angel', 'Maque', '', 'aw', 'aww', 'single', 'pinoy', '2023-12-19', '3', 'male', 'ww@w', '639932998409', 'approved', '2023-12-30', 27, '2023-03-15 03:03:00', 'awdaw');
+
 -- --------------------------------------------------------
 
 --
@@ -140,6 +189,33 @@ CREATE TABLE `tbl_scholar_family` (
   `sfam_numSiblings` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_scholar_family`
+--
+
+INSERT INTO `tbl_scholar_family` (`sfam_id`, `sfam_f_name`, `sfam_f_age`, `sfam_f_address`, `sfam_f_occupation`, `sfam_f_eduAttainment`, `sfam_f_mobileNum`, `sfam_m_name`, `sfam_m_age`, `sfam_m_address`, `sfam_m_occupation`, `sfam_m_eduAttainment`, `sfam_m_mobileNum`, `sfam_totalSalary`, `sfam_numSiblings`) VALUES
+(37, 'awd', '3', 'awd', 'awd', 'elementary', '333', 'awd', '3', 'awd', 'awd', 'elementary', '3333', 'below P10 000', '33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_sms`
+--
+
+CREATE TABLE `tbl_sms` (
+  `id` int(11) NOT NULL,
+  `label` varchar(32) NOT NULL,
+  `content` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_sms`
+--
+
+INSERT INTO `tbl_sms` (`id`, `label`, `content`) VALUES
+(1, 'sender', 'me'),
+(2, 'content', 'Your application form has been reviewed and updated. Visit the ASMS to check your application form status. :)');
+
 -- --------------------------------------------------------
 
 --
@@ -161,7 +237,9 @@ CREATE TABLE `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`user_id`, `user_type`, `user_fullname`, `user_username`, `user_email`, `user_password`, `user_creationDate`) VALUES
-(1, '1', 'Admin', 'admin', '', '$2y$10$jgUzMr.EaMCPxXmX7OvTzOGWL548wCxLgCg69mtn8HGgSraxNwtU2', '2023-12-04');
+(1, '1', 'Admin', 'admin', '', '$2y$10$jgUzMr.EaMCPxXmX7OvTzOGWL548wCxLgCg69mtn8HGgSraxNwtU2', '2023-12-04'),
+(27, '2', 'Maria Clara', 'user', 'maria@a.com', '$2y$10$W7Ly7IiQpIgxOgDRiDTq3uAzNEQrLqlibvF2RTn20mnPVSEKj7HfK', '2023-12-29'),
+(28, '2', 'Maria Clara', 'user2', 'user@a.com', '$2y$10$6FezlN53yaDpDmkfT8CHlOPgjAAKcMIx5QCbmAgdwVrMVQmcjv1DK', '2023-12-29');
 
 -- --------------------------------------------------------
 
@@ -199,25 +277,43 @@ ALTER TABLE `tbl_course`
   ADD PRIMARY KEY (`course_id`);
 
 --
+-- Indexes for table `tbl_noticeinfo`
+--
+ALTER TABLE `tbl_noticeinfo`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_notification`
 --
 ALTER TABLE `tbl_notification`
   ADD PRIMARY KEY (`notif_id`);
 
 --
+-- Indexes for table `tbl_reqinfo`
+--
+ALTER TABLE `tbl_reqinfo`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_scholar_application`
 --
 ALTER TABLE `tbl_scholar_application`
   ADD PRIMARY KEY (`scholar_id`),
-  ADD KEY `fk_scholar_fam` (`scholar_family`),
   ADD KEY `fk_scholar_course` (`scholar_course`),
-  ADD KEY `fk_scholar_formOwner` (`scholar_reqBy`);
+  ADD KEY `fk_scholar_formOwner` (`scholar_reqBy`),
+  ADD KEY `fk_scholar_fam` (`scholar_family`);
 
 --
 -- Indexes for table `tbl_scholar_family`
 --
 ALTER TABLE `tbl_scholar_family`
   ADD PRIMARY KEY (`sfam_id`);
+
+--
+-- Indexes for table `tbl_sms`
+--
+ALTER TABLE `tbl_sms`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tbl_user`
@@ -245,31 +341,49 @@ ALTER TABLE `tbl_admin`
 -- AUTO_INCREMENT for table `tbl_course`
 --
 ALTER TABLE `tbl_course`
-  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `tbl_noticeinfo`
+--
+ALTER TABLE `tbl_noticeinfo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_notification`
 --
 ALTER TABLE `tbl_notification`
-  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `tbl_reqinfo`
+--
+ALTER TABLE `tbl_reqinfo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_scholar_application`
 --
 ALTER TABLE `tbl_scholar_application`
-  MODIFY `scholar_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `scholar_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `tbl_scholar_family`
 --
 ALTER TABLE `tbl_scholar_family`
-  MODIFY `sfam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `sfam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT for table `tbl_sms`
+--
+ALTER TABLE `tbl_sms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `user_type`
@@ -286,7 +400,7 @@ ALTER TABLE `user_type`
 --
 ALTER TABLE `tbl_scholar_application`
   ADD CONSTRAINT `fk_scholar_course` FOREIGN KEY (`scholar_course`) REFERENCES `tbl_course` (`course_id`),
-  ADD CONSTRAINT `fk_scholar_fam` FOREIGN KEY (`scholar_family`) REFERENCES `tbl_scholar_family` (`sfam_id`),
+  ADD CONSTRAINT `fk_scholar_fam` FOREIGN KEY (`scholar_family`) REFERENCES `tbl_scholar_family` (`sfam_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_scholar_formOwner` FOREIGN KEY (`scholar_reqBy`) REFERENCES `tbl_user` (`user_id`);
 COMMIT;
 
