@@ -1,8 +1,3 @@
-<!-- 
-     this is the application UI. 
-     This is loaded in the <main> element inside your index.php file using the application() function inside your script.js file 
--->
-
 <?php
 require_once '../php/config.php';
 ?>
@@ -87,7 +82,7 @@ require_once '../php/config.php';
                   <div class="col">
                      <div class="form-floating">
                         <input type="text" class="form-control" name="apply_mnc" placeholder="Kabankalan" required>
-                        <label for="apply_mnc" class="form-label">Municipality</label>
+                        <label for="apply_mnc" class="form-label">City</label>
                      </div>
                   </div>
                </div>
@@ -127,7 +122,7 @@ require_once '../php/config.php';
                   <!-- age -->
                   <div class="col-2">
                      <div class="form-floating">
-                        <input type="number" class="form-control" name="apply_age" required>
+                        <input type="text" class="age form-control" name="apply_age" placeholder="What are you?" required>
                         <label for="apply_age" class="form-label">Age</label>
                      </div>
                   </div>
@@ -157,9 +152,12 @@ require_once '../php/config.php';
                   </div>
                   <!-- contact num -->
                   <div class="col">
-                     <div class="form-floating">
-                        <input type="text" class="form-control" name="apply_cn" placeholder="Contact num" required>
-                        <label for="apply_cn">Contact Number</label>
+                     <div class="input-group">
+                        <span class="input-group-text">+63</span>
+                        <div class="form-floating">
+                           <input type="text" class="cnum form-control" name="apply_cn" placeholder="Contact num" required>
+                           <label for="apply_cn">Contact Number</label>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -189,7 +187,7 @@ require_once '../php/config.php';
                   <div class="col d-flex gap-3">
                      <div class="col-3">
                         <div class="form-floating">
-                           <input type="number" class="form-control" name="apply_mom_age" placeholder="age" required>
+                           <input type="text" class="age form-control" name="apply_mom_age" placeholder="age" min="1" required>
                            <label for="apply_mom_age" class="form-label">Age</label>
                         </div>
                      </div>
@@ -204,7 +202,7 @@ require_once '../php/config.php';
                   <div class="col d-flex gap-3">
                      <div class="col-3">
                         <div class="form-floating">
-                           <input type="number" class="form-control" name="apply_dad_age" placeholder="age" required>
+                           <input type="text" class="age form-control" name="apply_dad_age" placeholder="age" min="1" required>
                            <label for="apply_dad_age" class="form-label">Age</label>
                         </div>
                      </div>
@@ -263,16 +261,22 @@ require_once '../php/config.php';
                <div class="row mt-3">
                   <!-- mother contact -->
                   <div class="col">
-                     <div class="form-floating">
-                        <input type="text" class="form-control" name="apply_mom_cn" placeholder="contact" required>
-                        <label for="apply_mom_cn" class="form-label">Contact Number</label>
+                     <div class="input-group">
+                        <span class="input-group-text">+63</span>
+                        <div class="form-floating">
+                           <input type="text" class="cnum form-control" name="apply_mom_cn" placeholder="contact" required>
+                           <label for="apply_mom_cn" class="form-label">Contact Number</label>
+                        </div>
                      </div>
                   </div>
                   <!-- father contact -->
                   <div class="col">
-                     <div class="form-floating">
-                        <input type="text" class="form-control" name="apply_dad_cn" placeholder="contact" required>
-                        <label for="apply_dad_cn" class="form-label">Contact Number</label>
+                     <div class="input-group">
+                        <span class="input-group-text">+63</span>
+                        <div class="form-floating">
+                           <input type="text" class="cnum form-control" name="apply_dad_cn" placeholder="contact" required>
+                           <label for="apply_dad_cn" class="form-label">Contact Number</label>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -291,7 +295,7 @@ require_once '../php/config.php';
                   <!-- num of siblings -->
                   <div class="col-4">
                      <div class="form-floating">
-                        <input type="number" class="form-control" name="apply_sibling" placeholder="sibling" required>
+                        <input type="text" class="age form-control" name="apply_sibling" placeholder="sibling" required>
                         <label for="apply_sibling" class="form-label">Number of Siblings</label>
                      </div>
                   </div>
@@ -337,3 +341,9 @@ require_once '../php/config.php';
       </div>
    </form>
 </div>
+
+<script>
+   // depota ngaa gagana ni using internal script pro kun external indi ?!?!
+   $(".age").mask("00");
+   $(".cnum").mask("0000000000");
+</script>

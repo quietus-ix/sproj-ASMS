@@ -23,6 +23,15 @@ $user = $query->fetch_column();
 	<link rel="stylesheet" href="../../src/extensions/datatables/datatables.css">
 	<link rel="stylesheet" href="../../src/extensions/icons/bootstrap-icons.css">
 	<link rel="stylesheet" href="style.css">
+
+	<script src="../../src/extensions/jquery-up.js"></script>
+	<script src="../../src/extensions/jquery.mask.js"></script>
+	<script src="../../src/extensions/popper.js"></script>
+	<script src="../../src/extensions/bootstrap/js/bootstrap.js"></script>
+	<script src="../../src/extensions/datatables/datatables.js"></script>
+	<script src="../../src/extensions/datatables/Buttons-2.4.2/js/dataTables.buttons.js"></script>
+	<script src="../../src/extensions/datatables/Buttons-2.4.2/js/buttons.print.js"></script>
+	<script src="script.js" type="module"></script>
 </head>
 
 <body class="">
@@ -70,33 +79,16 @@ $user = $query->fetch_column();
 					<h4 id="nav-heading" class="nav-heading m-0">Scholar Dashboard</h4>
 				</div>
 				<div class="col-2 d-flex justify-content-end w-25 gap-3 align-items-center">
-					<button class="btn border border-2 position-relative" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-						<i class="bi bi-bell-fill"></i>
-						<?php
-						$query = $conn->query("SELECT * FROM tbl_unotif WHERE unotif_for = $sessionID AND unotif_status = false");
-						if ($query->num_rows > 0) {
-						?>
-							<span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
-								<span class="visually-hidden">New alerts</span>
-							</span>
-						<?php } ?>
-					</button>
 
 					<div class="dropdown">
 						<button class="btn d-flex align-items-center gap-2 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<img src="../../src/assets/img/test-profile.png" class="rounded" alt="" style="width: 2.5rem; height: 2.5rem;">
+							<i class="bi bi-person-circle me-1 fs-3"></i>
 							<?php echo $user; ?>
 						</button>
 						<ul class="dropdown-menu">
 							<li>
-								<a class="dropdown-item d-flex align-items-center py-2" href="#">
-									<i class='bx bxs-contact fs-3 me-3'></i>
-									Your information
-								</a>
-							</li>
-							<li>
 								<a class="dropdown-item d-flex align-items-center py-2" href="../php/logout.php">
-									<i class='bx bxs-log-out fs-3 me-3'></i>
+									<i class="bi bi-power me-2 fs-5"></i>
 									Log out
 								</a>
 							</li>
@@ -106,33 +98,9 @@ $user = $query->fetch_column();
 			</div>
 
 			<!-- this <main> element is where the content of each tabs are displayed. Refer to your script.js to know what is displayed here -->
-			<main class="px-0">
+			<main class="px-0 overflow-scroll">
 				<!-- content here -->
 			</main>
-		</div>
-	</div>
-
-	<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-		<div class="offcanvas-header">
-			<h5 class="offcanvas-title" id="offcanvasRightLabel">Notifications</h5>
-			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-		</div>
-		<div class="offcanvas-body">
-			<?php
-			while ($query->fetch_assoc()) {
-			?>
-				<div class="row mb-3">
-					<div class="col">
-						<div class="card border border-4">
-							<div class="card-body">
-								<p class="card-text fw-bold">Your application form has been updated!</p>
-								<a href="#" id="notif_btnGoTo" class="btn btn-primary w-100" data-bs-dismiss="offcanvas">Go to</a>
-							</div>
-						</div>
-
-					</div>
-				<?php } ?>
-				</div>
 		</div>
 	</div>
 
@@ -162,15 +130,6 @@ $user = $query->fetch_column();
 			message
 		</div>
 	</div>
-
-	<script src="../../src/extensions/jquery-up.js"></script>
-	<script src="../../src/extensions/popper.js"></script>
-	<script src="../../src/extensions/bootstrap/js/bootstrap.js"></script>
-	<script src="../../src/extensions/datatables/datatables.js"></script>
-	<script src="../../src/extensions/datatables/Buttons-2.4.2/js/dataTables.buttons.js"></script>
-	<script src="../../src/extensions/datatables/Buttons-2.4.2/js/buttons.print.js"></script>
-	<script src="script.js" type="module"></script>
-	<script src="script.js"></script>
 </body>
 
 </html>

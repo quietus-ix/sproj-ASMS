@@ -118,15 +118,6 @@ if ($query->num_rows > 0) {
                     </p>
                </div>
           </div>
-          <div class="card shadow-sm w-25 h-75">
-               <div class="card-body d-flex flex-column">
-                    <h5 class="fw-medium fs-6 d-flex align-items-center justify-content-between">
-                         Slots left
-                         <i class='bx bxs-briefcase-alt-2 fs-2'></i>
-                    </h5>
-                    <p class="card-text fw-bold fs-4">0</p>
-               </div>
-          </div>
      </div>
 
      <!-- graph -->
